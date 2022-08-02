@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 
+	"github.com/Grama-Check/Grama-Check-App/auth"
 	"github.com/Grama-Check/Grama-Check-App/models"
 	"github.com/gin-gonic/gin"
 )
@@ -36,7 +38,16 @@ func IdentityCheck(c *gin.Context) models.IDChecked {
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, "Failed request to Identity check")
+
 	}
+	token, err := auth.GenerateToken()
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, "Failed to generate token")
+
+	}
+	authHeader := fmt.Sprintf("Bearer %v", token)
+	c.Header("authorization", authHeader)
 
 	resjson := models.IDChecked{}
 	c.BindJSON(res.Body)
@@ -55,6 +66,15 @@ func responseHandler(c *gin.Context) {
 	}
 
 	resjson := IdentityCheck(c)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, "Request to Identity Check service failed")
+		return
+	}
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, "Failed to generate token")
+		return
+	}
 
 	c.JSON(
 		http.StatusOK,

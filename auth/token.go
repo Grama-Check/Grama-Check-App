@@ -1,36 +1,32 @@
 package auth
 
 import (
-	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"io"
+	"io/ioutil"
 	"log"
-	"os"
-	"time"
 
 	"github.com/golang-jwt/jwt/v4"
 )
 
-var rsaPrivateKey *rsa.PrivateKey
-
-func init() {
-
-	f, err := os.Open("private.pem")
+func GenerateToken() (string, error) {
+	buffer, err := ioutil.ReadFile("private.pem")
 	if err != nil {
 		log.Fatal("Cannot read privatekey")
 	}
-	defer f.Close()
-	buf := make([]byte, 0)
-	io.ReadFull(f, buf)
-	block, _ := pem.Decode([]byte(buf))
-	rsaPrivateKey, _ = x509.ParsePKCS1PrivateKey(block.Bytes)
 
-}
+	block, _ := pem.Decode(buffer)
 
-func generateToken() (string, error) {
-	claims := jwt.RegisteredClaims{
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute))}
+	if err != nil {
+		log.Fatal("Cannot parse private.pem file")
+	}
+	rsaPrivateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+
+	if err != nil {
+		log.Fatal("Cannot parse private key")
+	}
+
+	claims := jwt.RegisteredClaims{}
 
 	jwt := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
 	jwtString, err := jwt.SignedString(rsaPrivateKey)

@@ -1,11 +1,13 @@
 package main
 
 import (
+	"github.com/Grama-Check/Grama-Check-App/auth"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
+	auth.GenerateKeys()
 
 	router.LoadHTMLGlob("templates/*")
 	router.GET("/", Index)
