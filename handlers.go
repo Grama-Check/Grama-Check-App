@@ -30,6 +30,7 @@ func IdentityCheck(c *gin.Context) models.IDChecked {
 		"uid":123,
 		"id":"izwcvpjmik"
 	}`)
+
 	bodyReader := bytes.NewReader(jsonBody)
 
 	req, _ := http.NewRequest(http.MethodPost, IdentityIP, bodyReader)
@@ -65,19 +66,24 @@ func responseHandler(c *gin.Context) {
 		return
 	}
 
-	resjson := IdentityCheck(c)
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, "Request to Identity Check service failed")
-		return
-	}
+	// Add to database if they don't exist
 
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, "Failed to generate token")
-		return
-	}
+	// check identity if exists return and add to database
+
+	// check address if exists return and add to db
+
+	// check for criminal record, add to database
+
+	// send completion
+
+	resjson := IdentityCheck(c)
 
 	c.JSON(
 		http.StatusOK,
 		resjson,
 	)
+}
+
+func getStatus(c *gin.Context) {
+
 }

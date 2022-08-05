@@ -18,6 +18,7 @@ func main() {
 	//authGroup := router.Group("/").Use()
 	//router.GET("/home", Home)
 	router.POST("/gramacheck", responseHandler)
+	router.POST("/status", getStatus)
 	// -> Identity Check , id, address , UID
 	// <- Failed/Passed , UID , Pass/Fail
 	router.Run(":9090")

@@ -1,12 +1,23 @@
 package models
 
 type Person struct {
-	UID     int    `json:uid`
-	ID      string `json:id`
-	Address string `json:address`
+	NIC     string `json:"nic"`
+	Name    string `json:"name"`
+	Address string `json:"address"`
+	Email   string `json:"email"`
 }
 
 type IDChecked struct {
-	UID    int  `json:uid`
-	Exists bool `json:exists`
+	NIC    string `json:"nic"`
+	Exists bool   `json:"exists"`
+}
+
+type AddressChecked struct {
+	NIC    string `json:"nic"`
+	Exists bool   `json:"exists"`
+}
+
+type PoliceCheck struct {
+	NIC   string `json:"nic"`
+	Clear string `json:"clear"`
 }
