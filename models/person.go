@@ -8,8 +8,8 @@ type Person struct {
 }
 
 type IDChecked struct {
-	NIC    string `json:"nic"`
 	Exists bool   `json:"exists"`
+	NIC    string `json:"nic"`
 }
 
 type AddressChecked struct {

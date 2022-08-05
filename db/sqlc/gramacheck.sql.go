@@ -26,18 +26,22 @@ VALUES (
     $2,
     $3,
     $4,
-    false,
-    false,
-    false,
-    false )
+    $5,
+    $6,
+    $7,
+    $8 )
 RETURNING nic, name, address, email, idcheck, addresscheck, policecheck, failed
 `
 
 type CreateUserParams struct {
-	Nic     string `json:"nic"`
-	Address string `json:"address"`
-	Name    string `json:"name"`
-	Email   string `json:"email"`
+	Nic          string `json:"nic"`
+	Address      string `json:"address"`
+	Name         string `json:"name"`
+	Email        string `json:"email"`
+	Idcheck      bool   `json:"idcheck"`
+	Addresscheck bool   `json:"addresscheck"`
+	Policecheck  bool   `json:"policecheck"`
+	Failed       bool   `json:"failed"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
@@ -46,6 +50,10 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		arg.Address,
 		arg.Name,
 		arg.Email,
+		arg.Idcheck,
+		arg.Addresscheck,
+		arg.Policecheck,
+		arg.Failed,
 	)
 	var i User
 	err := row.Scan(
