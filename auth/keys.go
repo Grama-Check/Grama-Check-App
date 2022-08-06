@@ -36,7 +36,7 @@ func GenerateKeys() {
 	}
 
 	// dump public key to file
-	publicKeyBytes, err := x509.MarshalPKIXPublicKey(publickey)
+	publicKeyBytes := x509.MarshalPKCS1PublicKey(publickey)
 	if err != nil {
 		fmt.Printf("error when dumping publickey: %s n", err)
 		os.Exit(1)

@@ -1,0 +1,268 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Fri Aug  5 22:21:15 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
+# default
+.SHELLFLAGS := -c
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /home/jhivanb/code/Grama-Check-App
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
+# environment
+STARSHIP_SESSION_KEY = 6431193715234150
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+VSCODE_CWD = /mnt/c/Users/Jhiva/AppData/Local/Programs/Microsoft VS Code
+# environment
+GOPROXY = https://proxy.golang.org,direct
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /home/jhivanb/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/remote-cli:/home/jhivanb/.pyenv/shims:/home/jhivanb/.local/share/nvm/v16.14.2/bin:/home/linuxbrew/.linuxbrew/bin:/usr/local/go/bin:/home/jhivanb/golib/bin:/home/jhivanb/workspace/bin:/home/jhivanb/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Users/Jhiva/AppData/Roaming/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Program Files/Ballerina/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/Jhiva/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Jhiva/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Jhiva/.jdks/corretto-1.8.0_322/bin:/mnt/c/lib/flutter/bin:/mnt/c/tools/dart-sdk/bin:/mnt/c/Users/Jhiva/AppData/Roaming/Pub/Cache/bin:/mnt/c/Users/Jhiva/AppData/Local/Programs/oh-my-posh/bin:/mnt/c/Users/Jhiva/AppData/Local/gitkraken/bin:/mnt/c/Users/Jhiva/go/bin:/mnt/c/Users/Jhiva/AppData/Local/JetBrains/Toolbox/scripts:/snap/bin
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+GOPATH = /home/jhivanb/golib
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+PYENV_ROOT = /home/jhivanb/.pyenv
+# environment
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-ed6c0cc6-4b6b-4505-bd92-4b40398536fe.sock
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# automatic
+%F = $(notdir $%)
+# environment
+nvm_current_version = v16.14.2
+# environment
+PWD = /home/jhivanb/code/Grama-Check-App
+# default
+.LOADED := 
+# environment
+WSL_INTEROP = /run/WSL/10_interop
+# environment
+WT_SESSION = 7a63b2cd-df96-4e17-b5ff-15e8bf1e81e4
+# environment
+GOMODCACHE = /home/jhivanb/golib/pkg/mod
+# environment
+PYENV_SHELL = fish
+# environment
+HOME = /home/jhivanb
+# environment
+LOGNAME = jhivanb
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 1
+# default
+MAKE_VERSION := 4.2.1
+# environment
+USER = jhivanb
+# makefile
+.DEFAULT_GOAL := postgres
+# environment
+NAME = Code
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/Jhiva/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
+# default
+MAKE_COMMAND := make
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MFLAGS = -pqrR
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+VSCODE_HANDLES_SIGPIPE = true
+# environment
+WT_PROFILE_ID = {07b52e3e-de2c-5db4-bd2d-ba144ed6c273}
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# environment
+HOSTTYPE = x86_64
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# default
+.RECIPEPREFIX := 
+# environment
+LANG = C
+# environment
+TERM = xterm-256color
+# environment
+WSL_DISTRO_NAME = Ubuntu-20.04
+# environment
+STARSHIP_SHELL = fish
+# variable set hash-table stats:
+# Load=69/1024=7%, Rehash=0, Collisions=8/94=9%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 2064, inode 148304): 18 files, no impossibilities.
+
+# 18 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+postgres:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 2):
+	docker run --name postgresdb -p 5000:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:alpine3.16
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+sqlc:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	sqlc generate
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-05 16:30:05.950077151
+#  File has been updated.
+#  Successfully updated.
+
+test:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 16):
+	go test -v -cover ./...
+
+createdb:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 4):
+	docker exec -it postgresdb createdb --username=root --owner=root postgres
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+dropdb:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 7):
+	docker exec -it postgresdb dropdb persons
+
+migrateup:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 10):
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5000/postgres?sslmode=disable" -verbose up
+
+migratedown:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 12):
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5000/postgres?sslmode=disable" -verbose down
+
+# files hash-table stats:
+# Load=12/1024=1%, Rehash=0, Collisions=0/28=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 31 / storage = 247 B / avg = 7 B
+# current buf: size = 8162 B / used = 247 B / count = 31 / avg = 7 B
+
+# strcache performance: lookups = 49 / hit rate = 36%
+# hash-table stats:
+# Load=31/8192=0%, Rehash=0, Collisions=1/49=2%
+# Finished Make data base on Fri Aug  5 22:21:15 2022
+
+ 
+make: *** No rule to make target 'all'.  Stop.
+
