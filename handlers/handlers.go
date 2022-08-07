@@ -17,11 +17,11 @@ import (
 )
 
 const (
-	IdentityIP = "http://20.253.149.158:8080"
+	IdentityIP = "http://20.245.188.111:8080"
 	//IdentityIP     = "http://localhost:8080"
-	addresscheckIP = "http://20.253.244.198:7070"
+	addresscheckIP = "http://20.66.32.88:7070"
 	dbDriver       = "postgres"
-	dbSource       = "postgresql://root:secret@localhost:5000/postgres?sslmode=disable"
+	dbSource       = "postgres://jhivan:25May2001@grama-check-db.postgres.database.azure.com/postgres?sslmode=require"
 )
 
 var queries *db.Queries
@@ -119,10 +119,12 @@ func IdentityCheck(p models.Person, c *gin.Context) {
 		return
 	}
 
-	err = queries.UpdateID(context.Background(), idchecked.NIC)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+	if idchecked.Exists {
+		err = queries.UpdateID(context.Background(), idchecked.NIC)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		}
+		Addresscheck(p, c)
 	}
 
 	Addresscheck(p, c)
@@ -174,6 +176,61 @@ func Addresscheck(p models.Person, c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 	}
 
+	if addresschecked.Exists {
+		err = queries.UpdateID(context.Background(), addresschecked.NIC)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		}
+		PoliceCheck(p, c)
+	}
+
+}
+func PoliceCheck(p models.Person, c *gin.Context) {
+	reqstr := fmt.Sprintf(`{"nic":"%s","address":"%s","name":"%s"}`, p.NIC, p.Address, p.Name)
+	jsonBody := []byte(reqstr)
+
+	bodyReader := bytes.NewReader(jsonBody)
+
+	req, err := http.NewRequest(http.MethodPost, IdentityIP, bodyReader)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		return
+
+	}
+
+	token, err := auth.GenerateToken()
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
+		return
+
+	}
+
+	authHeader := fmt.Sprintf("Bearer %v", token)
+
+	req.Header.Add("Authorization", authHeader)
+
+	res, err := http.DefaultClient.Do(req)
+
+	if err != nil {
+		log.Fatal("Couldn't perform request:", err)
+	}
+
+	// resBody, err := ioutil.ReadAll(res.Body)
+	policechecked := models.PoliceCheck{}
+	err = json.NewDecoder(res.Body).Decode(&policechecked)
+	if err != nil {
+		fmt.Println("err couldn't read body:", err)
+		return
+	}
+
+	if policechecked.Clear {
+		err = queries.UpdateID(context.Background(), policechecked.NIC)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		}
+	}
+
 }
 
 func GetStatus(c *gin.Context) {
@@ -183,22 +240,27 @@ func GetStatus(c *gin.Context) {
 
 	person, err := queries.GetUser(ctx, nic.NIC)
 
-	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
-		log.Fatal("Person not found in database")
+	if err == nil {
+		c.JSON(
+			http.StatusOK,
+			gin.H{
+				"exists":       true,
+				"name":         person.Name,
+				"nic":          person.Nic,
+				"failed":       person.Failed,
+				"idcheck":      person.Idcheck,
+				"policecheck":  person.Policecheck,
+				"addresscheck": person.Addresscheck,
+			},
+		)
+	} else {
+		c.JSON(
+			http.StatusOK,
+			gin.H{
+				"exists": false,
+			},
+		)
 	}
-
-	c.JSON(
-		http.StatusOK,
-		gin.H{
-			"name":         person.Name,
-			"nic":          person.Nic,
-			"failed":       person.Failed,
-			"idcheck":      person.Idcheck,
-			"policecheck":  person.Policecheck,
-			"addresscheck": person.Addresscheck,
-		},
-	)
 
 }
 func CreateUser(c *gin.Context) {
