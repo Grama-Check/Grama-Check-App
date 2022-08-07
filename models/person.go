@@ -19,5 +19,9 @@ type AddressChecked struct {
 
 type PoliceCheck struct {
 	NIC   string `json:"nic"`
-	Clear string `json:"clear"`
+	Clear bool   `json:"clear"`
+}
+
+type StatusCheck struct {
+	NIC string `json:"nic"`
 }
