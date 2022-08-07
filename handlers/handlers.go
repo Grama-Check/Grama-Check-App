@@ -12,6 +12,7 @@ import (
 	"github.com/Grama-Check/Grama-Check-App/auth"
 	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
+	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -25,19 +26,15 @@ const (
 )
 
 var queries *db.Queries
-
-func Index(c *gin.Context) {
-
-	c.HTML(
-		http.StatusOK,
-		"index.html",
-		gin.H{
-			"title": "testing",
-		},
-	)
-}
+var config util.Config
 
 func init() {
+	var err error
+	config, err = util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("Error loading config:", err)
+	}
+	log.Println(config.SendGridKey, ":", config.DBSource)
 	conn, err := sql.Open(dbDriver, dbSource)
 
 	err2 := conn.Ping()
@@ -48,6 +45,17 @@ func init() {
 	}
 
 	queries = db.New(conn)
+}
+
+func Index(c *gin.Context) {
+
+	c.HTML(
+		http.StatusOK,
+		"index.html",
+		gin.H{
+			"title": "testing",
+		},
+	)
 }
 
 func ResponseHandler(c *gin.Context) {
@@ -265,6 +273,9 @@ func GetStatus(c *gin.Context) {
 	c.BindJSON(&nic)
 
 	person, err := queries.GetUser(ctx, nic.NIC)
+	if err == nil {
+		SendStatus(person)
+	}
 
 	if err == nil {
 		c.JSON(
