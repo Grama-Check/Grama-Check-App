@@ -12,6 +12,7 @@ import (
 	"github.com/Grama-Check/Grama-Check-App/auth"
 	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
+	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -25,6 +26,25 @@ const (
 )
 
 var queries *db.Queries
+var config util.Config
+
+func init() {
+	var err error
+	config, err = util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("Error loading config:", err)
+	}
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
+
+	err2 := conn.Ping()
+
+	if err != nil || err2 != nil {
+		log.Println(http.StatusInternalServerError, `{"error": "couldn't connect to database"`)
+		return
+	}
+
+	queries = db.New(conn)
+}
 
 func Index(c *gin.Context) {
 
@@ -37,20 +57,8 @@ func Index(c *gin.Context) {
 	)
 }
 
-func init() {
-	conn, err := sql.Open(dbDriver, dbSource)
-
-	err2 := conn.Ping()
-
-	if err != nil || err2 != nil {
-		log.Println(http.StatusInternalServerError, `{"error": "couldn't connect to database"`)
-		return
-	}
-
-	queries = db.New(conn)
-}
-
 func ResponseHandler(c *gin.Context) {
+	SendStatus()
 
 	person := models.Person{}
 
