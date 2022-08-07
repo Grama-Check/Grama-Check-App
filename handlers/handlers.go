@@ -17,9 +17,9 @@ import (
 )
 
 const (
-	IdentityIP = "http://20.245.188.111:8080"
-	//IdentityIP     = "http://localhost:8080"
+	IdentityIP     = "http://20.245.188.111:8080"
 	addresscheckIP = "http://20.66.32.88:7070"
+	PoliceIP       = "http://20.245.209.212:6060"
 	dbDriver       = "postgres"
 	dbSource       = "postgres://jhivan:25May2001@grama-check-db.postgres.database.azure.com/postgres?sslmode=require"
 )
@@ -191,7 +191,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	bodyReader := bytes.NewReader(jsonBody)
 
-	req, err := http.NewRequest(http.MethodPost, IdentityIP, bodyReader)
+	req, err := http.NewRequest(http.MethodPost, PoliceIP, bodyReader)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		return
