@@ -26,6 +26,6 @@ COPY  private.pem .
 COPY  app.env . 
 COPY /public ./public
 
-EXPOSE 8080
+EXPOSE 9090
 
 CMD [ "./grama-check" ]
