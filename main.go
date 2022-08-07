@@ -20,6 +20,7 @@ func main() {
 	router.POST("/status", handlers.GetStatus)
 	router.GET("/gettoken", handlers.GetToken)
 	router.POST("/create", handlers.CreateUser)
+	router.POST("/gramatest", handlers.ResponseHandlerexists)
 	// -> Identity Check , id, address , UID
 	// <- Failed/Passed , UID , Pass/Fail
 	router.Run(":9090")

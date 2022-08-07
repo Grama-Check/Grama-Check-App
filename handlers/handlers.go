@@ -55,20 +55,28 @@ func ResponseHandler(c *gin.Context) {
 	person := models.Person{}
 
 	err := c.BindJSON(&person)
+
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, "Couldn't parse request body")
-		return
+		c.AbortWithStatusJSON(http.StatusBadRequest, `{"error";"Couldnt parse request to json}"`)
+
 	}
 
-	// Add to database if they don't exist
+	args := db.CreateUserParams{
+		Nic:          person.NIC,
+		Address:      person.Address,
+		Email:        person.Email,
+		Name:         person.Name,
+		Idcheck:      false,
+		Addresscheck: false,
+		Policecheck:  false,
+		Failed:       false,
+	}
 
-	// check identity if exists return and add to database
-
-	// check address if exists return and add to db
-
-	// check for criminal record, add to database
-
-	// send completion
+	_, err = queries.CreateUser(context.Background(), args)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, fmt.Sprintln("Couldn't add to db: ", err))
+		return
+	}
 
 	IdentityCheck(person, c)
 
@@ -118,16 +126,22 @@ func IdentityCheck(p models.Person, c *gin.Context) {
 		fmt.Println("err couldn't read body:", err)
 		return
 	}
+	log.Println("Identity: NIC from res", idchecked.NIC, "exists from res", idchecked.Exists)
+
+	log.Println("Identity: NIC from res", idchecked.NIC, "exists from res", idchecked.Exists)
 
 	if idchecked.Exists {
 		err = queries.UpdateID(context.Background(), idchecked.NIC)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		}
+
 		Addresscheck(p, c)
+		return
+	} else {
+		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: idchecked.NIC, Failed: true})
 	}
 
-	Addresscheck(p, c)
 }
 func Addresscheck(p models.Person, c *gin.Context) {
 	reqstr := fmt.Sprintf(`{"nic":"%s","address":"%s"}`, p.NIC, p.Address)
@@ -167,22 +181,23 @@ func Addresscheck(p models.Person, c *gin.Context) {
 		fmt.Println("err couldn't read body:", err)
 		return
 	}
-	log.Println("NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
+	log.Println("Address: NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
 
-	log.Println("NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
+	log.Println("Address: NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 	}
 
 	if addresschecked.Exists {
-		err = queries.UpdateID(context.Background(), addresschecked.NIC)
+		err = queries.UpdateAddress(context.Background(), addresschecked.NIC)
+
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		}
 		PoliceCheck(p, c)
 	} else {
-		queries.UpdateFailed(context.Background(), addresschecked.NIC)
+		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: addresschecked.NIC, Failed: true})
 	}
 
 }
@@ -224,12 +239,22 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 		fmt.Println("err couldn't read body:", err)
 		return
 	}
+	log.Println("Police: NIC from res", policechecked.NIC, "exists from res", policechecked.Clear)
+
+	log.Println("Police: NIC from res", policechecked.NIC, "exists from res", policechecked.Clear)
 
 	if policechecked.Clear {
-		err = queries.UpdateID(context.Background(), policechecked.NIC)
+		err = queries.UpdatePolice(context.Background(), policechecked.NIC)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		}
+		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: policechecked.NIC, Failed: false})
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		}
+
+	} else {
+		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: policechecked.NIC, Failed: true})
 	}
 
 }
@@ -309,6 +334,27 @@ func GetToken(c *gin.Context) {
 		http.StatusOK,
 		gin.H{
 			token: token,
+		},
+	)
+}
+
+func ResponseHandlerexists(c *gin.Context) {
+
+	person := models.Person{}
+
+	err := c.BindJSON(&person)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, `{"error";"Couldnt parse request to json}"`)
+
+	}
+
+	IdentityCheck(person, c)
+
+	c.JSON(
+		http.StatusOK,
+		gin.H{
+			"status": "ok",
 		},
 	)
 }

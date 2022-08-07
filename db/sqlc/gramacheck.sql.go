@@ -102,12 +102,17 @@ func (q *Queries) UpdateAddress(ctx context.Context, nic string) error {
 }
 
 const updateFailed = `-- name: UpdateFailed :exec
-UPDATE users SET failed = true
+UPDATE users SET failed = $2
 WHERE nic = $1
 `
 
-func (q *Queries) UpdateFailed(ctx context.Context, nic string) error {
-	_, err := q.db.ExecContext(ctx, updateFailed, nic)
+type UpdateFailedParams struct {
+	Nic    string `json:"nic"`
+	Failed bool   `json:"failed"`
+}
+
+func (q *Queries) UpdateFailed(ctx context.Context, arg UpdateFailedParams) error {
+	_, err := q.db.ExecContext(ctx, updateFailed, arg.Nic, arg.Failed)
 	return err
 }
 

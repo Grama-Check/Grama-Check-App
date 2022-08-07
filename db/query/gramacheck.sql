@@ -39,5 +39,5 @@ UPDATE users SET policecheck = true
 WHERE nic = $1;
 
 -- name: UpdateFailed :exec
-UPDATE users SET failed = true
+UPDATE users SET failed = $2
 WHERE nic = $1;
