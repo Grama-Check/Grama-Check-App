@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Aug  5 22:21:15 2022
+# Make data base, printed on Sun Aug  7 10:34:43 2022
 
 # Variables
 
@@ -31,7 +33,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-STARSHIP_SESSION_KEY = 6431193715234150
+STARSHIP_SESSION_KEY = 1757530049322926
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -55,7 +57,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 PYENV_ROOT = /home/jhivanb/.pyenv
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-ed6c0cc6-4b6b-4505-bd92-4b40398536fe.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-9b090125-49d8-47a7-be60-63e972f3cc7c.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # automatic
@@ -67,9 +69,9 @@ PWD = /home/jhivanb/code/Grama-Check-App
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/10_interop
+WSL_INTEROP = /run/WSL/1165_interop
 # environment
-WT_SESSION = 7a63b2cd-df96-4e17-b5ff-15e8bf1e81e4
+WT_SESSION = f53b18ad-1894-4655-b4c6-eecb4144cbb8
 # environment
 GOMODCACHE = /home/jhivanb/golib/pkg/mod
 # environment
@@ -157,7 +159,7 @@ STARSHIP_SHELL = fish
 
 # Directories
 
-# . (device 2064, inode 148304): 18 files, no impossibilities.
+# . (device 2096, inode 148304): 18 files, no impossibilities.
 
 # 18 files, no impossibilities in 1 directories.
 
@@ -261,8 +263,6 @@ migratedown:
 # strcache performance: lookups = 49 / hit rate = 36%
 # hash-table stats:
 # Load=31/8192=0%, Rehash=0, Collisions=1/49=2%
-# Finished Make data base on Fri Aug  5 22:21:15 2022
+# Finished Make data base on Sun Aug  7 10:34:43 2022
 
  
-make: *** No rule to make target 'all'.  Stop.
-

@@ -21,3 +21,7 @@ type PoliceCheck struct {
 	NIC   string `json:"nic"`
 	Clear string `json:"clear"`
 }
+
+type StatusCheck struct {
+	NIC string `json:"nic"`
+}
