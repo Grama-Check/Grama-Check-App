@@ -34,7 +34,8 @@ func init() {
 	if err != nil {
 		log.Fatal("Error loading config:", err)
 	}
-	conn, err := sql.Open(config.DBDriver, config.DBSource)
+	log.Println(config.SendGridKey, ":", config.DBSource)
+	conn, err := sql.Open(dbDriver, dbSource)
 
 	err2 := conn.Ping()
 
@@ -58,7 +59,6 @@ func Index(c *gin.Context) {
 }
 
 func ResponseHandler(c *gin.Context) {
-	SendStatus()
 
 	person := models.Person{}
 
@@ -273,6 +273,9 @@ func GetStatus(c *gin.Context) {
 	c.BindJSON(&nic)
 
 	person, err := queries.GetUser(ctx, nic.NIC)
+	if err == nil {
+		SendStatus(person)
+	}
 
 	if err == nil {
 		c.JSON(
