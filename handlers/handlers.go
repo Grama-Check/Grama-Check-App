@@ -170,7 +170,6 @@ func Addresscheck(p models.Person, c *gin.Context) {
 	log.Println("NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
 
 	log.Println("NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
-	err = queries.UpdateID(context.Background(), addresschecked.NIC)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
@@ -182,6 +181,8 @@ func Addresscheck(p models.Person, c *gin.Context) {
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		}
 		PoliceCheck(p, c)
+	} else {
+		queries.UpdateFailed(context.Background(), addresschecked.NIC)
 	}
 
 }
