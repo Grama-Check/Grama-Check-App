@@ -5,6 +5,7 @@ import (
 	"encoding/pem"
 	"io/ioutil"
 	"log"
+	"time"
 
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -26,7 +27,9 @@ func GenerateToken() (string, error) {
 		log.Fatal("Cannot parse private key")
 	}
 
-	claims := jwt.RegisteredClaims{}
+	claims := jwt.RegisteredClaims{
+		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+	}
 
 	jwt := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
 	jwtString, err := jwt.SignedString(rsaPrivateKey)

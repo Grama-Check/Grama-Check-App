@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Grama Check</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="the logo for grama check">
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+
+          <li class="dropdown"><a href="#"><span>Get a Certificate</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#grama-cert">Apply for a Grama Certificate</a></li>
+              <li><a href="#check-cert">Check Certification Progress</a></li>
+              <li><a href="#about">Apply for a Police Clearance</a></li>
+            </ul>
+          </li>
+          <li><a href="https://join.slack.com/t/gramacheck/shared_invite/zt-1drkg5xir-EoHnN_rqyTJ4ILOLT7HN3w" class="nav-link scrollto">Support</a></li>
+          <li><a class="getstarted scrollto" onClick="auth.signOut()">Logout</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">Digitalizing the old ways with booming technology</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Bringing you the new convenient and efficient way of applying for a grama certficate with ease and comfort</h2>
+          <div data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center text-lg-start">
+              <a href="#grama-cert" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Apply for a Certificate</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img src="assets/img/hero-img.png" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Grama Certificate Section ======= -->
+    <section id="grama-cert" class="grama-cert" name="grama-cert">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Grama Check</h2>
+          <p>Apply for a Grama Certificate</p>
+        </header>
+
+        <div class="row gy-4">
+
+          <div class="col-lg">
+            <form action="http://localhost:8080/apply" method="post" class="user-form" id="applyForm">
+              <div class="row align-self-center gy-3">
+
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                </div>
+
+                <div class="col-md-12">
+                  <input type="text" class="form-control" name="nic" placeholder="NIC number" required>
+                </div>
+
+                <div class="col-md-12">
+                  <textarea class="form-control" name="address" rows="6" placeholder="Address of Residence" required></textarea>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message"><!-- Cofigure the http --></div>
+
+                  <button onclick="alert('Success!\nApplication for Grama Certification Success')" type="submit">Apply for a Certificate</button>
+                </div>
+
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section><!-- End Grama Certificate Section -->
+
+    <!-- ======= Check Certificate Section ======= -->
+    <section id="check-cert" class="check-cert" name="check-cert" style="padding-top: 0px;">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <p>Check the Status of your Grama Certificate</p>
+        </header>
+
+        <div class="row gy-4">
+
+          <div class="col-lg">
+            <form action="http://localhost:8080/check" method="post" class="progress-form" id="checkForm">
+              <div class="row align-self-center gy-3">
+
+                <div class="col-md-6">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="text" class="form-control" name="nic" placeholder="NIC number" required>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message"><!-- Cofigure the http --></div>
+
+                  <button onclick="alert('Please wait while we process your request')" type="submit">Check Status of Certificate</button>
+                </div>
+
+              </div>
+            </form>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section><!-- End Grama Certificate Section -->
+
+    <!-- ======= Police Certificate Section ======= -->
+    <section id="about" class="about">
+
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-0">
+
+          <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="content">
+              <h3>Get a Police Clearance Online</h3>
+              <h2>Apply for a Police Background Check with Ease and Comfort.</h2>
+              <p>
+                Use the Grama certificate obtained through Grama Check to seamlessly apply for a police clearance certificate through the Sri Lanka Police Website.<br /><br />But don't worry, applying for a police clearance through Grama Check is coming soon with the same convenience and ease.
+              </p>
+              <div class="text-center text-lg-start">
+                <a href="https://eservices.police.lk/ClearanceCertificate/home.action" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
+                  <span>Get a Police Clearance</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+            <img src="assets/img/homepg_about.png" class="img-fluid" alt="">
+          </div>
+
+        </div>
+      </div>
+
+    </section><!-- End Police Certificate Section -->
+
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-info">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <img src="assets/img/logo.png" alt="">
+            </a>
+            <p>Digitalizing the old archaic method of obtaining the certification of residence through the Grama Sewaka with ease, convenience and efficency and reducing the stress, hassle and frustration along the way while providing an ease of access platform for anyone to have the best digital experience without the worry of data compromisation.</p>
+            <div class="social-links mt-3">
+              <a href="https://twitter.com/wso2" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="https://www.facebook.com/OfficialWSO2" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.youtube.com/user/WSO2TechFlicks" class="youtube"><i class="bi bi-youtube"></i></a>
+              <a href="https://www.linkedin.com/company/wso2/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#grama-cert">Get Grama Certificate</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#check-cert">Check Certificate Status</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#about">Apply for Police Clearance</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Contact Us</h4>
+            <p>
+              20, Palm Grove <br>
+              Colombo, 00300<br>
+              Sri Lanka <br><br>
+              <strong>Phone:</strong> +94 11 214 5345<br>
+              <strong>Email:</strong> support@gramacheck.com<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Asgardeo Integration -->
+  <script src="https://unpkg.com/@asgardeo/auth-spa@latest/dist/asgardeo-spa.production.min.js"></script>
+  <script>
+    // This client is a class and can be instantiated as follows.
+    var auth = AsgardeoAuth.AsgardeoSPAClient.getInstance();
+    // const auth = new AsgardeoAuthClient(store);
+
+    // Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
+    auth.initialize({
+      signInRedirectURL: "/home.html",
+      signOutRedirectURL: "/index.html",
+      clientID: "voZSrw1H0yDbaMDfV0Te603P3DYa",
+      baseUrl: "https://api.asgardeo.io/t/gramacheck",
+      scope: [ "openid","profile" ]
+    });
+    auth.signIn({callOnlyOnRedirect:true})
+
+    //Get the form element by id
+    let applyForm = document.getElementById("applyForm");
+    let checkForm = document.getElementById("checkForm");
+
+    //Define the event handler for the form when it's submitted
+    applyForm.addEventListener("submit", async (e) => {
+
+      // Prevent the default browser behaviour of submitting
+      e.preventDefault();
+
+      // Get the element attached to the event handler.
+      let form = e.currentTarget;
+
+      // Take the URL from the form's `action` attribute.
+      let url = form.action;
+
+      try {
+        // Takes all the form fields and make the field values
+        // available through a `FormData` instance.
+        let formData = new FormData(form);
+
+        // The `postFormFieldsAsJson()`
+        let responseData = await postFormFieldsAsJson({ url, formData });
+
+        // Destructure the response data
+        let { serverDataResponse } = responseData;
+
+        //Display the response data in the console (for debugging)
+        console.log(serverDataResponse);
+      } catch (error) {
+        //If an error occurs display it in the console (for debugging)
+        console.error(error);
+      }
+    });
+
+    //Define the event handler for the form when it's submitted
+    checkForm.addEventListener("submit", async (e) => {
+
+      // Prevent the default browser behaviour of submitting
+      e.preventDefault();
+
+      // Get the element attached to the event handler.
+      let form = e.currentTarget;
+
+      // Take the URL from the form's `action` attribute.
+      let url = form.action;
+
+      try {
+        // Takes all the form fields and make the field values
+        // available through a `FormData` instance.
+        let formData = new FormData(form);
+
+        // The `postFormFieldsAsJson()`
+        let responseData = await postFormFieldsAsJson({ url, formData });
+
+        // Destructure the response data
+        let { serverDataResponse } = responseData;
+
+        //Display the response data in the console (for debugging)
+        console.log(serverDataResponse);
+      } catch (error) {
+        //If an error occurs display it in the console (for debugging)
+        console.error(error);
+      }
+    });
+
+    // Helper function to POST data as JSON with Fetch.
+    async function postFormFieldsAsJson({ url, formData }) {
+      //Create an object from the form data entries
+      let formDataObject = Object.fromEntries(formData.entries());
+      // Format the plain form data as JSON
+      let formDataJsonString = JSON.stringify(formDataObject);
+
+      //Set the fetch options (headers, body)
+      let fetchOptions = {
+        //HTTP method set to POST.
+        method: "POST",
+        //Set the headers that specify you're sending a JSON body request and accepting JSON response
+        // headers: {
+        //   "Content-Type": "application/json",
+        //   "Accept": "application/json",
+        // },
+        // POST request body as JSON string.
+        body: formDataJsonString,
+      };
+
+      //Get the response body as JSON.
+      //If the response was not OK, throw an error.
+      let res = await fetch(url, fetchOptions);
+
+      //If the response is not ok throw an error (for debugging)
+      if (!res.ok) {
+        let error = await res.text();
+        throw new Error(error);
+      }
+      //If the response was OK, return the response body.
+      return res.json();
+    }
+  </script>
+
+</body>
+
+</html>

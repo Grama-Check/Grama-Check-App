@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Aug  7 15:07:24 2022
+# Make data base, printed on Sun Aug  7 20:49:41 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ make: *** No rule to make target 'all'.  Stop.
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = VSCODE_WSL_EXT_LOCATION/up
+WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
 # default
 .SHELLFLAGS := -c
 # automatic
@@ -33,7 +33,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-STARSHIP_SESSION_KEY = 2191223592672466
+STARSHIP_SESSION_KEY = 1449478013971880
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -47,7 +47,7 @@ GOPROXY = https://proxy.golang.org,direct
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/jhivanb/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/remote-cli:/home/jhivanb/.pyenv/shims:/home/jhivanb/.local/share/nvm/v16.14.2/bin:/home/linuxbrew/.linuxbrew/bin:/usr/local/go/bin:/home/jhivanb/golib/bin:/home/jhivanb/workspace/bin:/home/jhivanb/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Users/Jhiva/AppData/Roaming/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Program Files/Ballerina/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/Jhiva/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Jhiva/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Jhiva/.jdks/corretto-1.8.0_322/bin:/mnt/c/Users/Jhiva/AppData/Roaming/nvm:/mnt/c/Program Files/nodejs:/mnt/c/lib/flutter/bin:/mnt/c/tools/dart-sdk/bin:/mnt/c/Users/Jhiva/AppData/Roaming/Pub/Cache/bin:/mnt/c/Users/Jhiva/AppData/Local/Programs/oh-my-posh/bin:/mnt/c/Users/Jhiva/AppData/Local/gitkraken/bin:/mnt/c/Users/Jhiva/go/bin:/mnt/c/Users/Jhiva/AppData/Local/JetBrains/Toolbox/scripts:/snap/bin
+PATH = /home/jhivanb/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/remote-cli:/home/jhivanb/.pyenv/shims:/home/jhivanb/.local/share/nvm/v16.14.2/bin:/home/linuxbrew/.linuxbrew/bin:/usr/local/go/bin:/home/jhivanb/golib/bin:/home/jhivanb/workspace/bin:/home/jhivanb/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Users/Jhiva/AppData/Roaming/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Program Files/Ballerina/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/Jhiva/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Jhiva/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Jhiva/.jdks/corretto-1.8.0_322/bin:/mnt/c/lib/flutter/bin:/mnt/c/tools/dart-sdk/bin:/mnt/c/Users/Jhiva/AppData/Roaming/Pub/Cache/bin:/mnt/c/Users/Jhiva/AppData/Local/Programs/oh-my-posh/bin:/mnt/c/Users/Jhiva/AppData/Local/gitkraken/bin:/mnt/c/Users/Jhiva/go/bin:/mnt/c/Users/Jhiva/AppData/Local/JetBrains/Toolbox/scripts:/snap/bin
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
@@ -57,7 +57,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 PYENV_ROOT = /home/jhivanb/.pyenv
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-7552e81d-e374-447a-a6ba-a8a5c393aa52.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-cf530117-c5a4-42c2-bb59-de44001116e7.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # automatic
@@ -69,7 +69,9 @@ PWD = /home/jhivanb/code/Grama-Check-App
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/12228_interop
+WSL_INTEROP = /run/WSL/10_interop
+# environment
+WT_SESSION = f09fc48b-93d6-4921-a682-b376e4e49410
 # environment
 GOMODCACHE = /home/jhivanb/golib/pkg/mod
 # environment
@@ -99,7 +101,7 @@ USER = jhivanb
 # makefile
 .DEFAULT_GOAL := postgres
 # environment
-NAME = DESKTOP-7K0P7BP
+NAME = Code
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -122,6 +124,8 @@ MFLAGS = -pqrR
 +F = $(notdir $+)
 # environment
 VSCODE_HANDLES_SIGPIPE = true
+# environment
+WT_PROFILE_ID = {07b52e3e-de2c-5db4-bd2d-ba144ed6c273}
 # default
 MAKEFILES := 
 # automatic
@@ -147,7 +151,7 @@ WSL_DISTRO_NAME = Ubuntu-20.04
 # environment
 STARSHIP_SHELL = fish
 # variable set hash-table stats:
-# Load=67/1024=7%, Rehash=0, Collisions=8/92=9%
+# Load=69/1024=7%, Rehash=0, Collisions=8/94=9%
 
 # Pattern-specific Variable Values
 
@@ -155,9 +159,9 @@ STARSHIP_SHELL = fish
 
 # Directories
 
-# . (device 2096, inode 148304): 19 files, no impossibilities.
+# . (device 2064, inode 148304): 20 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 20 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -253,12 +257,12 @@ migratedown:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 32 / storage = 258 B / avg = 8 B
-# current buf: size = 8162 B / used = 258 B / count = 32 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 266 B / avg = 8 B
+# current buf: size = 8162 B / used = 266 B / count = 33 / avg = 8 B
 
-# strcache performance: lookups = 50 / hit rate = 36%
+# strcache performance: lookups = 51 / hit rate = 35%
 # hash-table stats:
-# Load=32/8192=0%, Rehash=0, Collisions=1/50=2%
-# Finished Make data base on Sun Aug  7 15:07:24 2022
+# Load=33/8192=0%, Rehash=0, Collisions=1/51=2%
+# Finished Make data base on Sun Aug  7 20:49:41 2022
 
  
