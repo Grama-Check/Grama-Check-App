@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Grama Check</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="the logo for grama check">
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          
+          <li class="dropdown"><a href="#"><span>Get a Certificate</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a onClick="auth.signIn()">Apply for a Grama Certificate</a></li>
+              <li><a onClick="auth.signIn()">Check Certification Progress</a></li>
+              <li><a onClick="auth.signIn()">Apply for a Police Clearance</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" onClick="auth.signIn()">Sign In</a></li>
+          <li><a class="getstarted scrollto" onClick="auth.signIn()">Get Started</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">Digitalizing the old ways with booming technology</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Bringing you the new convenient and efficient way of applying for a grama certficate with ease and comfort</h2>
+          <div data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center text-lg-start">
+              <a class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center" onClick="auth.signIn()">
+                <span>Get Started</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img src="assets/img/hero-img.png" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-0">
+
+          <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="content">
+              <h3>What is Grama Check</h3>
+              <h2>Taking away the old hassle of being in the queue for ages for a certification of residence.</h2>
+              <p>
+                Grama Check is a new way of bring you the option of obtaining the certifcation or proof of residence from a Grama Sewaka office in times of need for obtaining services such as a police background check and etc.
+              </p>
+              <div class="text-center text-lg-start">
+                <a href="#" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
+                  <span onClick="auth.signIn()">Get Started</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+            <img src="assets/img/about.jpg" class="img-fluid" alt="">
+          </div>
+
+        </div>
+      </div>
+
+    </section><!-- End About Section -->
+
+    <!-- ======= Values Section ======= -->
+    <section id="values" class="values" name="Values">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Our Values</h2>
+          <p>Convenient, Secure, Time Saving</p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="box">
+              <img src="assets/img/values-1.png" class="img-fluid" alt="">
+              <h3>Convenience at your fingertips</h3>
+              <p>Grama Check not only is easy to use but also brings you the convenience without worrying about long lines, disappointment and frustration. </p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
+            <div class="box">
+              <img src="assets/img/values-2.png" class="img-fluid" alt="">
+              <h3>Always protecting your data</h3>
+              <p>Grama Check not only makes your life easier but also provides the secure gateways for you to use the application without any worry of compromise.</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
+            <div class="box">
+              <img src="assets/img/values-3.png" class="img-fluid" alt="">
+              <h3>Saving you time that matters</h3>
+              <p>Grama Check saves you the time so you can spend it with your loved ones or spend it on being productive rather than stand in a queue for hours at end.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- End Values Section -->
+
+    <!-- ======= Features Section ======= -->
+    <a name="features"></a>
+    <section id="features" class="features">
+
+      
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Features</h2>
+          <p>Providing You A Seamless Digital Experience With</p>
+        </header>
+
+        <div class="row">
+
+          <div class="col-lg-6">
+            <img src="assets/img/features.png" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
+            <div class="row align-self-center gy-4">
+
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="200">
+                <div class="feature-box d-flex align-items-center">
+                  <i class="bi bi-check"></i>
+                  <h3>Seamless Interactions</h3>
+                </div>
+              </div>
+
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="300">
+                <div class="feature-box d-flex align-items-center">
+                  <i class="bi bi-check"></i>
+                  <h3>Fast Navigation</h3>
+                </div>
+              </div>
+
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="400">
+                <div class="feature-box d-flex align-items-center">
+                  <i class="bi bi-check"></i>
+                  <h3>Friendly Design</h3>
+                </div>
+              </div>
+
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="500">
+                <div class="feature-box d-flex align-items-center">
+                  <i class="bi bi-check"></i>
+                  <h3>24x7 Support</h3>
+                </div>
+              </div>
+
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="600">
+                <div class="feature-box d-flex align-items-center">
+                  <i class="bi bi-check"></i>
+                  <h3>Ease of Access</h3>
+                </div>
+              </div>
+
+              <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
+                <div class="feature-box d-flex align-items-center">
+                  <i class="bi bi-check"></i>
+                  <h3>Secure Services</h3>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div> 
+
+      </div>
+
+    </section><!-- End Features Section -->
+
+    <!-- ======= Services Section ======= -->
+    <a name="services"></a>
+    <section id="services" class="services">
+      
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Services</h2>
+          <p>Serving You Convenience With Services Such As</p>
+        </header>
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-box orange">
+              <i class="bi bi-file-earmark-person icon"></i>
+              <h3>Apply for Grama Certificate</h3>
+              <p>Reduce the hassle of waiting outside the grama sewaka office and apply for the grama certificate with convenience and ease.</p>
+              <a onClick="auth.signIn()" class="read-more"><span>Apply Now</span> <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-box orange">
+              <i class="bi bi-person-check-fill icon"></i>
+              <h3>Check Grama Certificate Status</h3>
+              <p>Don't wait in queues waiting for the grama certificate for hours. Avoid the inconvenience and check the progress fast and easy.</p>
+              <a onClick="auth.signIn()" class="read-more"><span>Get Started</span> <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-box orange">
+              <i class="bi bi-person-bounding-box icon"></i>
+              <h3>Apply for Police Background Certificate</h3>
+              <p>Securely apply for a police background certification without having to waste time for hours at the police station for days.</p>
+              <a onClick="auth.signIn()" class="read-more"><span>Apply Now</span> <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- End Services Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-info">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <img src="assets/img/logo.png" alt="">
+            </a>
+            <p>Digitalizing the old archaic method of obtaining the certification of residence through the Grama Sewaka with ease, convenience and efficency and reducing the stress, hassle and frustration along the way while providing an ease of access platform for anyone to have the best digital experience without the worry of data compromisation.</p>
+            <div class="social-links mt-3">
+              <a href="https://twitter.com/wso2" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="https://www.facebook.com/OfficialWSO2" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.youtube.com/user/WSO2TechFlicks" class="youtube"><i class="bi bi-youtube"></i></a>
+              <a href="https://www.linkedin.com/company/wso2/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#values">Our Values</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#features">Our Features</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#services">Our Services</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Contact Us</h4>
+            <p>
+              20, Palm Grove <br>
+              Colombo, 00300<br>
+              Sri Lanka <br><br>
+              <strong>Phone:</strong> +94 11 214 5345<br>
+              <strong>Email:</strong> support@gramacheck.com<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Asgardeo Integration -->
+  <script src="https://unpkg.com/@asgardeo/auth-spa@latest/dist/asgardeo-spa.production.min.js"></script>
+  <script>
+    // This client is a class and can be instantiated as follows.
+    var auth = AsgardeoAuth.AsgardeoSPAClient.getInstance();
+    // const auth = new AsgardeoAuthClient(store);
+
+    // Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
+    auth.initialize({
+      signInRedirectURL: "/home.html",
+      signOutRedirectURL: "/index.html",
+      clientID: "voZSrw1H0yDbaMDfV0Te603P3DYa",
+      baseUrl: "https://api.asgardeo.io/t/gramacheck",
+      scope: [ "openid","profile" ]
+    });
+    auth.signIn({callOnlyOnRedirect:true})
+  </script>
+
+</body>
+
+</html>
