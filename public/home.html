@@ -283,7 +283,28 @@
       baseUrl: "https://api.asgardeo.io/t/gramacheck",
       scope: [ "openid","profile" ]
     });
-    auth.signIn({callOnlyOnRedirect:true})
+
+    auth.signIn({callOnlyOnRedirect:true}).then(()=>{
+      auth.getAccessToken().then(Response=>{
+        sessionStorage.setItem("token",Response);
+      });
+    })
+
+    // The `sign-in` hook is used to fire a callback function after signing in is successful.
+    auth.on("sign-in", (response) => {
+        alert("Welcome. You have successfully signed in to Grama Check!");
+    });
+
+    auth.getBasicUserInfo().then((response) => {
+        console.log(response);
+    }).catch((error) => {
+        console.error(error);
+    });
+
+    // The `sign-out` hook is used to fire a callback function after signing out is successful.
+    auth.on("sign-out", (response) => {
+        alert("You successfully signed out. Thank you for using Grama Check.");
+    });
 
     //Get the form element by id
     let applyForm = document.getElementById("applyForm");

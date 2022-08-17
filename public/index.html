@@ -334,6 +334,8 @@
   <script>
     // This client is a class and can be instantiated as follows.
     var auth = AsgardeoAuth.AsgardeoSPAClient.getInstance();
+    const isAuth = auth.isAuthenticated();
+    const accessToken = await auth.getAccessToken();
     // const auth = new AsgardeoAuthClient(store);
 
     // Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
@@ -344,7 +346,38 @@
       baseUrl: "https://api.asgardeo.io/t/gramacheck",
       scope: [ "openid","profile" ]
     });
-    auth.signIn({callOnlyOnRedirect:true})
+    
+    // auth.signIn({callOnlyOnRedirect:true}).then(()=>{
+    //   auth.getAccessToken().then((token) => {
+    //     console.log(token);
+    //     sessionStorage.setItem("token",token);
+
+    // }).error((error) => {
+    //     onsole.error(error);
+    // });}
+
+    auth.signIn({callOnlyOnRedirect:true}).then(()=>{
+      auth.getAccessToken().then(Response=>{
+        sessionStorage.setItem("token",Response);
+      });
+    })
+
+    // The `sign-in` hook is used to fire a callback function after signing in is successful.
+    auth.on("sign-in", (response) => {
+        alert("Welcome. You have successfully signed in to Grama Check!");
+    });
+
+    auth.getBasicUserInfo().then((response) => {
+        console.log(response);
+    }).catch((error) => {
+        console.error(error);
+    });
+
+    // The `sign-out` hook is used to fire a callback function after signing out is successful.
+    auth.on("sign-out", (response) => {
+        alert("You successfully signed out. Thank you for using Grama Check.");
+    });
+
   </script>
 
 </body>
