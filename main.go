@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/Grama-Check/Grama-Check-App/handlers"
+	"github.com/Grama-Check/Grama-Check-App/middleware"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -9,12 +11,20 @@ import (
 func main() {
 	router := gin.Default()
 
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"}
+	config.AllowHeaders = []string{"*"}
+
+	router.Use(cors.New(config))
+
 	router.Use(static.Serve("/", static.LocalFile("./public", false)))
 
-	router.POST("/gramacheck", handlers.ResponseHandler)
-	router.POST("/status", handlers.GetStatus)
-	router.GET("/gettoken", handlers.GetToken)
-	router.POST("/create", handlers.CreateUser)
-	router.POST("/gramatest", handlers.ResponseHandlerexists)
+	authGroup := router.Group("/").Use(middleware.AuthMiddleware())
+
+	authGroup.POST("/gramacheck", handlers.ResponseHandler)
+	authGroup.POST("/status", handlers.GetStatus)
+	authGroup.GET("/gettoken", handlers.GetToken)
+	authGroup.POST("/create", handlers.CreateUser)
+	authGroup.POST("/gramatest", handlers.ResponseHandlerexists)
 	router.Run(":9090")
 }

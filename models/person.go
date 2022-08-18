@@ -25,3 +25,16 @@ type PoliceCheck struct {
 type StatusCheck struct {
 	NIC string `json:"nic"`
 }
+
+type AuthorizedUser struct {
+	Name      string `json:"name"`
+	Sub       string `json:"sub"`
+	FirstName string `json:"given_name"`
+	LastName  string `json:"family_name"`
+	Email     string `json:"username"`
+}
+
+type InvalidToken struct {
+	ErrorDescription string `json:"error_description"`
+	Error            string `json:"error"`
+}
