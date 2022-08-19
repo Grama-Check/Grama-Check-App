@@ -58,40 +58,42 @@ func Index(c *gin.Context) {
 
 func ResponseHandler(c *gin.Context) {
 
-	person := models.Person{}
+	fmt.Println("here")
 
-	err := c.BindJSON(&person)
+	// person := models.Person{}
 
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, `{"error";"Couldnt parse request to json}"`)
+	// err := c.BindJSON(&person)
 
-	}
+	// if err != nil {
+	// 	c.AbortWithStatusJSON(http.StatusBadRequest, `{"error";"Couldnt parse request to json}"`)
 
-	args := db.CreateUserParams{
-		Nic:          person.NIC,
-		Address:      person.Address,
-		Email:        person.Email,
-		Name:         person.Name,
-		Idcheck:      false,
-		Addresscheck: false,
-		Policecheck:  false,
-		Failed:       false,
-	}
+	// }
 
-	_, err = queries.CreateUser(context.Background(), args)
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, fmt.Sprintln("Couldn't add to db: ", err))
-		return
-	}
+	// args := db.CreateUserParams{
+	// 	Nic:          person.NIC,
+	// 	Address:      person.Address,
+	// 	Email:        person.Email,
+	// 	Name:         person.Name,
+	// 	Idcheck:      false,
+	// 	Addresscheck: false,
+	// 	Policecheck:  false,
+	// 	Failed:       false,
+	// }
 
-	IdentityCheck(person, c)
+	// _, err = queries.CreateUser(context.Background(), args)
+	// if err != nil {
+	// 	c.AbortWithStatusJSON(http.StatusInternalServerError, fmt.Sprintln("Couldn't add to db: ", err))
+	// 	return
+	// }
 
-	c.JSON(
-		http.StatusOK,
-		gin.H{
-			"status": "ok",
-		},
-	)
+	// IdentityCheck(person, c)
+
+	// c.JSON(
+	// 	http.StatusOK,
+	// 	gin.H{
+	// 		"status": "ok",
+	// 	},
+	// )
 }
 
 func GetStatus(c *gin.Context) {

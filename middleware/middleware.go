@@ -47,28 +47,39 @@ func AuthMiddleware() gin.HandlerFunc {
 			fmt.Println("error 2")
 		}
 
-		invalidToken := models.InvalidToken{}
+		user := models.AuthorizedUser{}
 
-		err3 := json.NewDecoder(resp.Body).Decode(&invalidToken)
+		err4 := json.NewDecoder(resp.Body).Decode(&user)
 
-		if err3 == nil {
+		if err4 != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, "Couldn't parse json request")
+			return
+		}
+
+		if (models.AuthorizedUser{} == user) {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, "Access token validation failed")
 			return
 		}
 
-		// user := models.AuthorizedUser{}
+		person := models.Person{}
 
-		// err = json.NewDecoder(resp.Body).Decode(&user)
+		err := c.BindJSON(&person)
 
-		// if err != nil {
-		// 	fmt.Println("err couldn't read body:", err)
-		// 	return
-		// }
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusBadRequest, "Couldn't parse json request")
+			return
+		}
 
-		fmt.Println("here")
+		formNIC := strings.ReplaceAll(person.NIC, " ", "")
+		userNIC := strings.ReplaceAll(user.NIC, " ", "")
 
-		defer resp.Body.Close()
+		if !strings.EqualFold(formNIC, userNIC) {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, "NIC mismatch")
+			return
+		}
 
-		// c.Next()
+		fmt.Println(user)
+
+		c.Next()
 	}
 }

@@ -29,6 +29,7 @@ type StatusCheck struct {
 type AuthorizedUser struct {
 	Name      string `json:"name"`
 	Sub       string `json:"sub"`
+	NIC       string `json:"nic"`
 	FirstName string `json:"given_name"`
 	LastName  string `json:"family_name"`
 	Email     string `json:"username"`
