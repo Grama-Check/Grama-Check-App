@@ -1,10 +1,5 @@
--- name: GetUser :one
-SELECT * FROM users
-WHERE nic = $1
-LIMIT 1;
-
--- name: CreateUser :one
-INSERT INTO users (
+-- name: CreateCheck :one
+INSERT INTO checks (
     nic,
     address,
     name,
@@ -13,9 +8,7 @@ INSERT INTO users (
     addresscheck,
     policecheck,
     failed
-
-) 
-VALUES (
+) VALUES (
     $1,
     $2,
     $3,
@@ -23,21 +16,30 @@ VALUES (
     $5,
     $6,
     $7,
-    $8 )
+    $8)
 RETURNING *;
 
--- name: UpdateID :exec
-UPDATE users SET idcheck = true
+-- name: GetCheck :one
+SELECT * FROM checks
+WHERE nic = $1
+LIMIT 1;
+
+-- name: UpdateIdentityCheck :exec
+UPDATE checks SET idcheck = true
 WHERE nic = $1;
 
--- name: UpdateAddress :exec
-UPDATE users SET addresscheck = true
+-- name: UpdateAddressCheck :exec
+UPDATE checks SET addresscheck = true
 WHERE nic = $1;
 
--- name: UpdatePolice :exec
-UPDATE users SET policecheck = true
+-- name: UpdatePoliceCheck :exec
+UPDATE checks SET policecheck = true
 WHERE nic = $1;
 
 -- name: UpdateFailed :exec
-UPDATE users SET failed = $2
+UPDATE checks SET failed = true
+WHERE nic = $1;
+
+-- name: DeleteCheck :exec
+DELETE FROM checks 
 WHERE nic = $1;

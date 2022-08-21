@@ -9,7 +9,6 @@ import (
 	"net/http"
 
 	"github.com/Grama-Check/Grama-Check-App/auth"
-	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
 	"github.com/gin-gonic/gin"
 )
@@ -22,17 +21,14 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, PoliceIP, bodyReader)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
-
 	}
 
 	token, err := auth.GenerateToken()
-
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
-
 	}
 
 	authHeader := fmt.Sprintf("Bearer %v", token)
@@ -40,34 +36,31 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 	req.Header.Add("Authorization", authHeader)
 
 	res, err := http.DefaultClient.Do(req)
-
 	if err != nil {
-		log.Fatal("Couldn't perform request:", err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	// resBody, err := ioutil.ReadAll(res.Body)
 	policechecked := models.PoliceCheck{}
+
 	err = json.NewDecoder(res.Body).Decode(&policechecked)
 	if err != nil {
-		fmt.Println("err couldn't read body:", err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	log.Println("Police: NIC from res", policechecked.NIC, "exists from res", policechecked.Clear)
 
 	log.Println("Police: NIC from res", policechecked.NIC, "exists from res", policechecked.Clear)
+
+	// log.Println("Police: NIC from res", policechecked.NIC, "exists from res", policechecked.Clear)
 
 	if policechecked.Clear {
-		err = queries.UpdatePolice(context.Background(), policechecked.NIC)
+		err = queries.UpdatePoliceCheck(context.Background(), policechecked.NIC)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+			return
 		}
-		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: policechecked.NIC, Failed: false})
-		if err != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
-		}
-
 	} else {
-		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: policechecked.NIC, Failed: true})
+		queries.UpdateFailed(context.Background(), policechecked.NIC)
 	}
-
 }

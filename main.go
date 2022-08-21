@@ -24,7 +24,6 @@ func main() {
 	authGroup.POST("/gramacheck", handlers.ResponseHandler)
 	authGroup.POST("/status", handlers.GetStatus)
 	authGroup.GET("/gettoken", handlers.GetToken)
-	authGroup.POST("/create", handlers.CreateUser)
 	authGroup.POST("/gramatest", handlers.ResponseHandlerexists)
 	router.Run(":9090")
 }

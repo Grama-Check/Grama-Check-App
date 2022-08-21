@@ -9,7 +9,6 @@ import (
 	"net/http"
 
 	"github.com/Grama-Check/Grama-Check-App/auth"
-	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
 	"github.com/gin-gonic/gin"
 )
@@ -22,17 +21,14 @@ func IdentityCheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, IdentityIP, bodyReader)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
-
 	}
 
 	token, err := auth.GenerateToken()
-
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
-
 	}
 
 	authHeader := fmt.Sprintf("Bearer %v", token)
@@ -40,32 +36,33 @@ func IdentityCheck(p models.Person, c *gin.Context) {
 	req.Header.Add("Authorization", authHeader)
 
 	res, err := http.DefaultClient.Do(req)
-
 	if err != nil {
-		log.Fatal("Couldn't perform request:", err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	// resBody, err := ioutil.ReadAll(res.Body)
 	idchecked := models.IDChecked{}
+
 	err = json.NewDecoder(res.Body).Decode(&idchecked)
 	if err != nil {
-		fmt.Println("err couldn't read body:", err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	log.Println("Identity: NIC from res", idchecked.NIC, "exists from res", idchecked.Exists)
 
 	log.Println("Identity: NIC from res", idchecked.NIC, "exists from res", idchecked.Exists)
+
+	// log.Println("Identity: NIC from res", idchecked.NIC, "exists from res", idchecked.Exists)
 
 	if idchecked.Exists {
-		err = queries.UpdateID(context.Background(), idchecked.NIC)
+		err = queries.UpdateIdentityCheck(context.Background(), idchecked.NIC)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+			return
 		}
 
 		Addresscheck(p, c)
-		return
 	} else {
-		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: idchecked.NIC, Failed: true})
+		queries.UpdateFailed(context.Background(), idchecked.NIC)
 	}
-
 }

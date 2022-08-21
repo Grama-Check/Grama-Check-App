@@ -23,7 +23,8 @@ type PoliceCheck struct {
 }
 
 type StatusCheck struct {
-	NIC string `json:"nic"`
+	NIC   string `json:"nic"`
+	Email string `json:"email"`
 }
 
 type AuthorizedUser struct {
@@ -35,7 +36,12 @@ type AuthorizedUser struct {
 	Email     string `json:"username"`
 }
 
-type InvalidToken struct {
-	ErrorDescription string `json:"error_description"`
-	Error            string `json:"error"`
+type Check struct {
+	Nic          string `json:"nic"`
+	Address      string `json:"address"`
+	Name         string `json:"name"`
+	Email        string `json:"email"`
+	Idcheck      bool   `json:"idcheck"`
+	Addresscheck bool   `json:"addresscheck"`
+	Policecheck  bool   `json:"policecheck"`
 }

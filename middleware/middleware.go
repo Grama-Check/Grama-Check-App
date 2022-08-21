@@ -2,12 +2,12 @@ package middleware
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/Grama-Check/Grama-Check-App/models"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
@@ -34,25 +34,24 @@ func AuthMiddleware() gin.HandlerFunc {
 		accessToken := fields[1]
 
 		req, err1 := http.NewRequest("GET", "https://api.asgardeo.io/t/gramacheck/oauth2/userinfo", nil)
-
 		if err1 != nil {
-			fmt.Println("error 1")
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err1.Error())
+			return
 		}
 
 		req.Header.Set("Authorization", "Bearer "+accessToken)
 
 		resp, err2 := http.DefaultClient.Do(req)
-
 		if err2 != nil {
-			fmt.Println("error 2")
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err2.Error())
+			return
 		}
 
 		user := models.AuthorizedUser{}
 
 		err4 := json.NewDecoder(resp.Body).Decode(&user)
-
 		if err4 != nil {
-			c.AbortWithStatusJSON(http.StatusBadRequest, "Couldn't parse json request")
+			c.AbortWithStatusJSON(http.StatusBadRequest, err4.Error())
 			return
 		}
 
@@ -61,24 +60,39 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		person := models.Person{}
+		formType := c.GetHeader("Form")
 
-		err := c.BindJSON(&person)
+		if formType == "apply" {
+			model := models.Person{}
 
-		if err != nil {
-			c.AbortWithStatusJSON(http.StatusBadRequest, "Couldn't parse json request")
-			return
+			if err := c.ShouldBindBodyWith(&model, binding.JSON); err != nil {
+				c.AbortWithError(http.StatusBadRequest, err)
+				return
+			}
+
+			formNIC := strings.ReplaceAll(model.NIC, " ", "")
+			userNIC := strings.ReplaceAll(user.NIC, " ", "")
+
+			if !strings.EqualFold(formNIC, userNIC) {
+				c.AbortWithStatusJSON(http.StatusUnauthorized, "NIC mismatch")
+				return
+			}
+		} else if formType == "check" {
+			model := models.StatusCheck{}
+
+			if err := c.ShouldBindBodyWith(&model, binding.JSON); err != nil {
+				c.AbortWithError(http.StatusBadRequest, err)
+				return
+			}
+
+			formNIC := strings.ReplaceAll(model.NIC, " ", "")
+			userNIC := strings.ReplaceAll(user.NIC, " ", "")
+
+			if !strings.EqualFold(formNIC, userNIC) {
+				c.AbortWithStatusJSON(http.StatusUnauthorized, "NIC mismatch")
+				return
+			}
 		}
-
-		formNIC := strings.ReplaceAll(person.NIC, " ", "")
-		userNIC := strings.ReplaceAll(user.NIC, " ", "")
-
-		if !strings.EqualFold(formNIC, userNIC) {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, "NIC mismatch")
-			return
-		}
-
-		fmt.Println(user)
 
 		c.Next()
 	}
