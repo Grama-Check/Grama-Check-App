@@ -11,6 +11,7 @@ import (
 	"github.com/Grama-Check/Grama-Check-App/auth"
 	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
+	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,6 +23,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, PoliceIP, bodyReader)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		return
 
@@ -30,6 +32,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 	token, err := auth.GenerateToken()
 
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
 
@@ -42,6 +45,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 	res, err := http.DefaultClient.Do(req)
 
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		log.Fatal("Couldn't perform request:", err)
 	}
 
@@ -59,14 +63,17 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 	if policechecked.Clear {
 		err = queries.UpdatePolice(context.Background(), policechecked.NIC)
 		if err != nil {
+			util.SendError(http.StatusInternalServerError, err.Error())
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		}
 		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: policechecked.NIC, Failed: false})
 		if err != nil {
+			util.SendError(http.StatusInternalServerError, err.Error())
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		}
 
 	} else {
+		util.SendIssue(p, "Police")
 		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: policechecked.NIC, Failed: true})
 	}
 

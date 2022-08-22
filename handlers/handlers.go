@@ -80,6 +80,7 @@ func ResponseHandler(c *gin.Context) {
 
 	_, err = queries.CreateUser(context.Background(), args)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, fmt.Sprintln("Couldn't add to db: ", err))
 		return
 	}
@@ -150,6 +151,7 @@ func CreateUser(c *gin.Context) {
 
 	_, err = queries.CreateUser(context.Background(), args)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, fmt.Sprintln("Couldn't add to db: ", err))
 		return
 	}

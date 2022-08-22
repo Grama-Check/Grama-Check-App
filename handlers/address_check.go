@@ -11,6 +11,7 @@ import (
 	"github.com/Grama-Check/Grama-Check-App/auth"
 	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
+	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,6 +24,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, addresscheckIP, bodyReader)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
 		return
 
@@ -31,6 +33,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 	token, err := auth.GenerateToken()
 
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
 
@@ -43,12 +46,14 @@ func Addresscheck(p models.Person, c *gin.Context) {
 	res, err := http.DefaultClient.Do(req)
 
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		log.Fatal("Couldn't perform request:", err)
 	}
 
 	addresschecked := models.AddressChecked{}
 	err = json.NewDecoder(res.Body).Decode(&addresschecked)
 	if err != nil {
+
 		fmt.Println("err couldn't read body:", err)
 		return
 	}
@@ -68,6 +73,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 		}
 		PoliceCheck(p, c)
 	} else {
+		util.SendIssue(p, "Address")
 		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: addresschecked.NIC, Failed: true})
 	}
 

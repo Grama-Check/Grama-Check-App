@@ -8,7 +8,6 @@ import (
 
 func main() {
 	router := gin.Default()
-
 	router.Use(static.Serve("/", static.LocalFile("./public", false)))
 
 	router.POST("/gramacheck", handlers.ResponseHandler)
