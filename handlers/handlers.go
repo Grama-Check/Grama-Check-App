@@ -17,12 +17,9 @@ import (
 )
 
 const (
-	IdentityIP = "http://20.245.188.111:8080"
-	// addresscheckIP = "http://20.66.32.88:7070"
-	// PoliceIP       = "http://20.245.209.212:6060"
-
-	addresscheckIP = "http://localhost:7070"
-	PoliceIP       = "http://localhost:6060"
+	IdentityIP     = "https://identity-check-service.mangobeach-b9b75009.westus.azurecontainerapps.io"
+	addresscheckIP = "https://address-check-service.mangobeach-b9b75009.westus.azurecontainerapps.io"
+	PoliceIP       = "https://police-check-service.mangobeach-b9b75009.westus.azurecontainerapps.io"
 )
 
 var queries *db.Queries
