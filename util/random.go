@@ -38,6 +38,7 @@ func RandomName() string {
 func RandomAddress() string {
 	return RandomString(15)
 }
+
 func RandomEmail() string {
 	return RandomString(15)
 }

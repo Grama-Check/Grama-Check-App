@@ -2,97 +2,114 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"testing"
 
 	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/stretchr/testify/require"
 )
 
-func CreateRandomUser(t *testing.T) User {
-	args := CreateUserParams{
+func createRandomCheck(t *testing.T) Check {
+	args := CreateCheckParams{
 		Nic:     util.RandomID(),
 		Name:    util.RandomName(),
 		Address: util.RandomAddress(),
 		Email:   util.RandomEmail(),
 	}
-	user, err := testQueries.CreateUser(context.Background(), args)
+
+	check, err := testQueries.CreateCheck(context.Background(), args)
+	require.NoError(t, err)
+	require.NotEmpty(t, check)
+
+	require.Equal(t, args.Nic, check.Nic)
+	require.Equal(t, args.Name, check.Name)
+	require.Equal(t, args.Address, check.Address)
+	require.Equal(t, args.Address, check.Address)
+	require.Equal(t, false, check.Idcheck)
+	require.Equal(t, false, check.Addresscheck)
+	require.Equal(t, false, check.Policecheck)
+	require.Equal(t, false, check.Failed)
+
+	return check
+}
+
+func TestCreateCheck(t *testing.T) {
+	createRandomCheck(t)
+}
+
+func TestGetCheck(t *testing.T) {
+	check := createRandomCheck(t)
+
+	check2, err := testQueries.GetCheck(context.Background(), check.Nic)
 
 	require.NoError(t, err)
-	require.NotEmpty(t, user)
+	require.NotEmpty(t, check2)
 
-	require.Equal(t, args.Nic, user.Nic)
-	require.Equal(t, args.Name, user.Name)
-	require.Equal(t, args.Address, user.Address)
-	require.Equal(t, args.Address, user.Address)
-	require.Equal(t, false, user.Idcheck)
-	require.Equal(t, false, user.Addresscheck)
-	require.Equal(t, false, user.Policecheck)
-	require.Equal(t, false, user.Failed)
-
-	return user
-
+	require.Equal(t, check.Nic, check2.Nic)
+	require.Equal(t, check.Name, check2.Name)
+	require.Equal(t, check.Address, check2.Address)
+	require.Equal(t, check.Email, check2.Email)
+	require.Equal(t, check.Idcheck, check2.Idcheck)
+	require.Equal(t, check.Addresscheck, check2.Addresscheck)
+	require.Equal(t, check.Policecheck, check2.Policecheck)
+	require.Equal(t, check.Failed, check2.Failed)
 }
 
-func TestCreateUser(t *testing.T) {
-	CreateRandomUser(t)
-}
+func TestUpdateIdentityCheck(t *testing.T) {
+	check := createRandomCheck(t)
 
-func TestGetPerson(t *testing.T) {
-	user := CreateRandomUser(t)
+	testQueries.UpdateIdentityCheck(context.Background(), check.Nic)
 
-	user2, err := testQueries.GetUser(context.Background(), user.Nic)
-
-	require.NoError(t, err)
-	require.NotEmpty(t, user2)
-
-	require.Equal(t, user.Nic, user2.Nic)
-	require.Equal(t, user.Name, user2.Name)
-	require.Equal(t, user.Address, user2.Address)
-	require.Equal(t, user.Email, user2.Email)
-
-}
-
-func TestSetIdentityCheck(t *testing.T) {
-	user := CreateRandomUser(t)
-
-	testQueries.UpdateID(context.Background(), user.Nic)
-
-	user, err := testQueries.GetUser(context.Background(), user.Nic)
-
-	require.NoError(t, err)
-
-	require.Equal(t, true, user.Idcheck)
-}
-func TestSetPoliceCheck(t *testing.T) {
-	user := CreateRandomUser(t)
-
-	testQueries.UpdatePolice(context.Background(), user.Nic)
-
-	user, err := testQueries.GetUser(context.Background(), user.Nic)
+	check, err := testQueries.GetCheck(context.Background(), check.Nic)
 
 	require.NoError(t, err)
 
-	require.Equal(t, true, user.Policecheck)
+	require.Equal(t, true, check.Idcheck)
 }
-func TestSetAddressCheck(t *testing.T) {
-	user := CreateRandomUser(t)
 
-	testQueries.UpdateAddress(context.Background(), user.Nic)
+func TestUpdateAddressCheck(t *testing.T) {
+	check := createRandomCheck(t)
 
-	user, err := testQueries.GetUser(context.Background(), user.Nic)
+	testQueries.UpdateAddressCheck(context.Background(), check.Nic)
+
+	check, err := testQueries.GetCheck(context.Background(), check.Nic)
 
 	require.NoError(t, err)
 
-	require.Equal(t, true, user.Addresscheck)
+	require.Equal(t, true, check.Addresscheck)
 }
-func TestSetFailed(t *testing.T) {
-	user := CreateRandomUser(t)
 
-	testQueries.UpdateFailed(context.Background(), user.Nic)
+func TestUpdatePoliceCheck(t *testing.T) {
+	check := createRandomCheck(t)
 
-	user, err := testQueries.GetUser(context.Background(), user.Nic)
+	testQueries.UpdatePoliceCheck(context.Background(), check.Nic)
+
+	check, err := testQueries.GetCheck(context.Background(), check.Nic)
 
 	require.NoError(t, err)
 
-	require.Equal(t, true, user.Failed)
+	require.Equal(t, true, check.Policecheck)
+}
+
+func TestUpdateFailed(t *testing.T) {
+	check := createRandomCheck(t)
+
+	testQueries.UpdateFailed(context.Background(), check.Nic)
+
+	check, err := testQueries.GetCheck(context.Background(), check.Nic)
+
+	require.NoError(t, err)
+
+	require.Equal(t, true, check.Failed)
+}
+
+func TestDeleteCheck(t *testing.T) {
+	check1 := createRandomCheck(t)
+	err := testQueries.DeleteCheck(context.Background(), check1.Nic)
+	require.NoError(t, err)
+
+	check2, err := testQueries.GetCheck(context.Background(), check1.Nic)
+	require.Error(t, err)
+	require.EqualError(t, err, sql.ErrNoRows.Error())
+	require.Empty(t, check2)
 }

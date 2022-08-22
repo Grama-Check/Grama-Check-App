@@ -23,5 +23,25 @@ type PoliceCheck struct {
 }
 
 type StatusCheck struct {
-	NIC string `json:"nic"`
+	NIC   string `json:"nic"`
+	Email string `json:"email"`
+}
+
+type AuthorizedUser struct {
+	Name      string `json:"name"`
+	Sub       string `json:"sub"`
+	NIC       string `json:"nic"`
+	FirstName string `json:"given_name"`
+	LastName  string `json:"family_name"`
+	Email     string `json:"username"`
+}
+
+type Check struct {
+	Nic          string `json:"nic"`
+	Address      string `json:"address"`
+	Name         string `json:"name"`
+	Email        string `json:"email"`
+	Idcheck      bool   `json:"idcheck"`
+	Addresscheck bool   `json:"addresscheck"`
+	Policecheck  bool   `json:"policecheck"`
 }

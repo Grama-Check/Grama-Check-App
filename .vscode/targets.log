@@ -8,110 +8,212 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Aug  7 20:49:41 2022
+# Make data base, printed on Sun Aug 21 00:48:54 2022
 
 # Variables
 
+# 'override' directive
+GNUMAKEFLAGS := 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
+DESKTOP_SESSION = ubuntu
 # default
 .SHELLFLAGS := -c
+# environment
+XDG_SESSION_CLASS = user
+# environment
+SNAP_COMMON = /var/snap/code/common
+# environment
+XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# automatic
-@F = $(notdir $@)
+# environment
+XAUTHORITY = /run/user/1000/gdm/Xauthority
+# environment
+GDMSESSION = ubuntu
+# environment
+XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /home/jhivanb/code/Grama-Check-App
+CURDIR := /home/wso2/Desktop/Grama-Check-App
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
+SNAP_DATA = /var/snap/code/105
 # environment
-STARSHIP_SESSION_KEY = 1449478013971880
-# 'override' directive
-GNUMAKEFLAGS := 
+VTE_VERSION = 6003
 # environment
-XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+JOURNAL_STREAM = 8:99320
 # environment
-VSCODE_CWD = /mnt/c/Users/Jhiva/AppData/Local/Programs/Microsoft VS Code
+XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
-GOPROXY = https://proxy.golang.org,direct
-# default
-MAKE_HOST := x86_64-pc-linux-gnu
+SNAP_INSTANCE_NAME = code
 # environment
-PATH = /home/jhivanb/.vscode-server/bin/da76f93349a72022ca4670c1b84860304616aaa2/bin/remote-cli:/home/jhivanb/.pyenv/shims:/home/jhivanb/.local/share/nvm/v16.14.2/bin:/home/linuxbrew/.linuxbrew/bin:/usr/local/go/bin:/home/jhivanb/golib/bin:/home/jhivanb/workspace/bin:/home/jhivanb/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Users/Jhiva/AppData/Roaming/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Program Files/Ballerina/bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/Jhiva/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Jhiva/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Jhiva/.jdks/corretto-1.8.0_322/bin:/mnt/c/lib/flutter/bin:/mnt/c/tools/dart-sdk/bin:/mnt/c/Users/Jhiva/AppData/Roaming/Pub/Cache/bin:/mnt/c/Users/Jhiva/AppData/Local/Programs/oh-my-posh/bin:/mnt/c/Users/Jhiva/AppData/Local/gitkraken/bin:/mnt/c/Users/Jhiva/go/bin:/mnt/c/Users/Jhiva/AppData/Local/JetBrains/Toolbox/scripts:/snap/bin
+SNAP_ARCH = amd64
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
-GOPATH = /home/jhivanb/golib
+JAVA_HOME = /usr/lib/jvm/java-8-openjdk-amd64
+# automatic
+@F = $(notdir $@)
+# environment
+IM_CONFIG_PHASE = 1
+# environment
+BALLERINA_HOME = /usr/lib/bal
+# environment
+USERNAME = wso2
+# environment
+MAKELEVEL := 0
+# environment
+XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=f70ebbb77df16cf839843eff63011bc2
+# environment
+MANAGERPID = 1378
+# environment
+LESSOPEN = | /usr/bin/lesspipe %s
+# environment
+LC_NAME = si_LK
+# environment
+VSCODE_CWD = /home/wso2/Desktop/Grama-Check-App
+# environment
+GOPROXY = https://proxy.golang.org,direct
+# environment
+GSETTINGS_SCHEMA_DIR = /snap/code/105/usr/share/glib-2.0/schemas
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/wso2/.fzf/bin:/usr/lib/jvm/java-8-openjdk-amd64/bin
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+SESSION_MANAGER = local/harshas:@/tmp/.ICE-unix/2501,unix/harshas:/tmp/.ICE-unix/2501
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GDK_PIXBUF_MODULE_FILE = /home/wso2/snap/code/common/.cache/gdk-pixbuf-loaders.cache
+# environment
+SNAP = /snap/code/105
+# environment
+GOPATH = /home/wso2/go
+# environment
+SNAP_VERSION = e4503b30
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-PYENV_ROOT = /home/jhivanb/.pyenv
+INVOCATION_ID = 99e1cdb18a0f4f90984cff9205227c18
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-cf530117-c5a4-42c2-bb59-de44001116e7.sock
+GDK_PIXBUF_MODULEDIR = /snap/code/105/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+# environment
+XDG_SESSION_DESKTOP = ubuntu
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # automatic
 %F = $(notdir $%)
 # environment
-nvm_current_version = v16.14.2
+DISPLAY = :0
 # environment
-PWD = /home/jhivanb/code/Grama-Check-App
+SNAP_INSTANCE_KEY = 
+# environment
+PWD = /home/wso2/Desktop/Grama-Check-App
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/10_interop
+SSH_AGENT_PID = 2429
 # environment
-WT_SESSION = f09fc48b-93d6-4921-a682-b376e4e49410
+ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
-GOMODCACHE = /home/jhivanb/golib/pkg/mod
+GTK_MODULES = gail:atk-bridge
 # environment
-PYENV_SHELL = fish
+GOMODCACHE = /home/wso2/go/pkg/mod
 # environment
-HOME = /home/jhivanb
+HOME = /home/wso2
 # environment
-LOGNAME = jhivanb
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# environment
+VSCODE_CLI = 1
+# environment
+VSCODE_CODE_CACHE_PATH = /home/wso2/.config/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
+# environment
+LOGNAME = wso2
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
+SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
+# environment
+SNAP_CONTEXT = huNXtTEqaE5mYwvCd1rKGTz2kgb6ggx7s0aK55q48oFGHiUcjfOp
+# automatic
++F = $(notdir $+)
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+SNAP_USER_COMMON = /home/wso2/snap/code/common
+# environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
-MAKELEVEL := 0
+LC_TIME = si_LK
+# environment
+SNAP_REAL_HOME = /home/wso2
+# environment
+COLORTERM = truecolor
 # default
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
+QT_IM_MODULE = ibus
+# environment
+SNAP_USER_DATA = /home/wso2/snap/code/105
+# environment
 SHLVL = 1
+# environment
+GNOME_SHELL_SESSION_MODE = ubuntu
 # default
 MAKE_VERSION := 4.2.1
 # environment
-USER = jhivanb
+USER = wso2
+# environment
+SNAP_REVISION = 105
+# environment
+LC_MONETARY = si_LK
 # makefile
 .DEFAULT_GOAL := postgres
 # environment
-NAME = Code
+XDG_CURRENT_DESKTOP = Unity
+# environment
+GOROOT = /usr/local/go
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
-VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/Jhiva/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
+LC_TELEPHONE = si_LK
 # default
 MAKE_COMMAND := make
 # default
 .VARIABLES := 
 # automatic
 *F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-07b9c5d7-1.70.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -120,38 +222,60 @@ MFLAGS = -pqrR
 *D = $(patsubst %/,%,$(dir $*))
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
-# automatic
-+F = $(notdir $+)
 # environment
-VSCODE_HANDLES_SIGPIPE = true
+GDK_BACKEND = x11
 # environment
-WT_PROFILE_ID = {07b52e3e-de2c-5db4-bd2d-ba144ed6c273}
+LC_PAPER = si_LK
+# environment
+QT_ACCESSIBILITY = 1
 # default
 MAKEFILES := 
+# environment
+SNAP_COOKIE = huNXtTEqaE5mYwvCd1rKGTz2kgb6ggx7s0aK55q48oFGHiUcjfOp
+# environment
+LC_NUMERIC = si_LK
 # automatic
 <F = $(notdir $<)
 # environment
+LC_MEASUREMENT = si_LK
+# environment
+SNAP_NAME = code
+# environment
 LC_ALL = C
 # environment
-HOSTTYPE = x86_64
+DBUS_STARTER_BUS_TYPE = session
+# environment
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/fea5f55c_3174_4e90_9ae8_34ff96c548fe
 # automatic
 ^F = $(notdir $^)
+# environment
+GNOME_TERMINAL_SERVICE = :1.94
 # default
 SUFFIXES := 
+# environment
+SNAP_REEXEC = 
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+WINDOWPATH = 2
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+LC_IDENTIFICATION = si_LK
 # default
 .RECIPEPREFIX := 
+# environment
+LC_ADDRESS = si_LK
 # environment
 LANG = C
 # environment
 TERM = xterm-256color
 # environment
-WSL_DISTRO_NAME = Ubuntu-20.04
+VSCODE_PID = 8210
 # environment
-STARSHIP_SHELL = fish
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=f70ebbb77df16cf839843eff63011bc2
 # variable set hash-table stats:
-# Load=69/1024=7%, Rehash=0, Collisions=8/94=9%
+# Load=131/1024=13%, Rehash=0, Collisions=20/156=13%
 
 # Pattern-specific Variable Values
 
@@ -159,9 +283,9 @@ STARSHIP_SHELL = fish
 
 # Directories
 
-# . (device 2064, inode 148304): 20 files, no impossibilities.
+# . (device 64769, inode 11801034): 22 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -200,7 +324,7 @@ sqlc:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-07 14:58:11.523175825
+#  Last modified 2022-08-19 10:44:38.312115759
 #  File has been updated.
 #  Successfully updated.
 
@@ -257,12 +381,12 @@ migratedown:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 266 B / avg = 8 B
-# current buf: size = 8162 B / used = 266 B / count = 33 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 35 / storage = 288 B / avg = 8 B
+# current buf: size = 8162 B / used = 288 B / count = 35 / avg = 8 B
 
-# strcache performance: lookups = 51 / hit rate = 35%
+# strcache performance: lookups = 53 / hit rate = 33%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=1/51=2%
-# Finished Make data base on Sun Aug  7 20:49:41 2022
+# Load=35/8192=0%, Rehash=0, Collisions=1/53=2%
+# Finished Make data base on Sun Aug 21 00:48:54 2022
 
  

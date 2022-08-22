@@ -9,7 +9,6 @@ import (
 	"net/http"
 
 	"github.com/Grama-Check/Grama-Check-App/auth"
-	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
 	"github.com/gin-gonic/gin"
 )
@@ -23,17 +22,14 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, addresscheckIP, bodyReader)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
-
 	}
 
 	token, err := auth.GenerateToken()
-
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
-
 	}
 
 	authHeader := fmt.Sprintf("Bearer %v", token)
@@ -41,34 +37,32 @@ func Addresscheck(p models.Person, c *gin.Context) {
 	req.Header.Add("Authorization", authHeader)
 
 	res, err := http.DefaultClient.Do(req)
-
 	if err != nil {
-		log.Fatal("Couldn't perform request:", err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 
 	addresschecked := models.AddressChecked{}
+
 	err = json.NewDecoder(res.Body).Decode(&addresschecked)
 	if err != nil {
-		fmt.Println("err couldn't read body:", err)
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	log.Println("Address: NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
 
 	log.Println("Address: NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
 
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, err)
-	}
+	// log.Println("Address: NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
 
 	if addresschecked.Exists {
-		err = queries.UpdateAddress(context.Background(), addresschecked.NIC)
-
+		err = queries.UpdateAddressCheck(context.Background(), addresschecked.NIC)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, err)
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+			return
 		}
+
 		PoliceCheck(p, c)
 	} else {
-		queries.UpdateFailed(context.Background(), db.UpdateFailedParams{Nic: addresschecked.NIC, Failed: true})
+		queries.UpdateFailed(context.Background(), addresschecked.NIC)
 	}
-
 }

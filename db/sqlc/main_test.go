@@ -11,25 +11,18 @@ import (
 
 const (
 	dbDriver = "postgres"
-	dbSource = "postgresql://root:secret@localhost:5000/persons?sslmode=disable"
+	dbSource = "postgresql://jhivan:25May2001@grama-check-db.postgres.database.azure.com/postgres?sslmode=require"
 )
 
 var testQueries *Queries
-var testDB *sql.DB
 
 func TestMain(m *testing.M) {
-	var err error
-	if err != nil {
-		log.Fatal("Cannot load config")
-
-	}
-
-	testDB, err := sql.Open(dbDriver, dbSource)
+	conn, err := sql.Open(dbDriver, dbSource)
 	if err != nil {
 		log.Fatal("Cannot connect to database")
 	}
 
-	testQueries = New(testDB)
+	testQueries = New(conn)
 
 	os.Exit(m.Run())
 }

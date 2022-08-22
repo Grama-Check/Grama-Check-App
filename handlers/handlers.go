@@ -3,24 +3,23 @@ package handlers
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/Grama-Check/Grama-Check-App/auth"
 	db "github.com/Grama-Check/Grama-Check-App/db/sqlc"
 	"github.com/Grama-Check/Grama-Check-App/models"
 	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	_ "github.com/lib/pq"
 )
 
 const (
-	IdentityIP     = "http://20.245.188.111:8080"
-	addresscheckIP = "http://20.66.32.88:7070"
-	PoliceIP       = "http://20.245.209.212:6060"
-	dbDriver       = "postgres"
-	dbSource       = "postgres://jhivan:25May2001@grama-check-db.postgres.database.azure.com/postgres?sslmode=require"
+	IdentityIP     = "https://identity-check-service.mangobeach-b9b75009.westus.azurecontainerapps.io"
+	addresscheckIP = "https://address-check-service.mangobeach-b9b75009.westus.azurecontainerapps.io"
+	PoliceIP       = "https://police-check-service.mangobeach-b9b75009.westus.azurecontainerapps.io"
 )
 
 var queries *db.Queries
@@ -28,17 +27,17 @@ var config util.Config
 
 func init() {
 	var err error
+
 	config, err = util.LoadConfig(".")
 	if err != nil {
 		log.Fatal("Error loading config:", err)
 	}
+
 	//log.Println(config.SendGridKey, ":", config.DBSource)
 	conn, err := sql.Open(config.DBDriver, config.DBSource)
-
 	err2 := conn.Ping()
-
 	if err != nil || err2 != nil {
-		log.Println(http.StatusInternalServerError, `{"error": "couldn't connect to database"`)
+		log.Println(http.StatusInternalServerError, err.Error(), err2.Error())
 		return
 	}
 
@@ -46,7 +45,6 @@ func init() {
 }
 
 func Index(c *gin.Context) {
-
 	c.HTML(
 		http.StatusOK,
 		"index.html",
@@ -57,17 +55,14 @@ func Index(c *gin.Context) {
 }
 
 func ResponseHandler(c *gin.Context) {
-
 	person := models.Person{}
 
-	err := c.BindJSON(&person)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, `{"error";"Couldnt parse request to json}"`)
-
+	if err := c.ShouldBindBodyWith(&person, binding.JSON); err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
+		return
 	}
 
-	args := db.CreateUserParams{
+	args := db.CreateCheckParams{
 		Nic:          person.NIC,
 		Address:      person.Address,
 		Email:        person.Email,
@@ -78,10 +73,26 @@ func ResponseHandler(c *gin.Context) {
 		Failed:       false,
 	}
 
-	_, err = queries.CreateUser(context.Background(), args)
+	_, err := queries.CreateCheck(context.Background(), args)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, fmt.Sprintln("Couldn't add to db: ", err))
-		return
+		duplicateError := "pq: duplicate key value violates unique constraint \"checks_pkey\""
+
+		if strings.EqualFold(err.Error(), duplicateError) {
+			err = queries.DeleteCheck(context.Background(), args.Nic)
+			if err != nil {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+				return
+			}
+
+			_, err = queries.CreateCheck(context.Background(), args)
+			if err != nil {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+				return
+			}
+		} else {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+			return
+		}
 	}
 
 	IdentityCheck(person, c)
@@ -96,67 +107,27 @@ func ResponseHandler(c *gin.Context) {
 
 func GetStatus(c *gin.Context) {
 	nic := models.StatusCheck{}
-	ctx := context.Background()
-	c.BindJSON(&nic)
 
-	person, err := queries.GetUser(ctx, nic.NIC)
-	if err == nil {
-		SendStatus(person)
-	}
-
-	if err == nil {
-		c.JSON(
-			http.StatusOK,
-			gin.H{
-				"exists":       true,
-				"name":         person.Name,
-				"nic":          person.Nic,
-				"failed":       person.Failed,
-				"idcheck":      person.Idcheck,
-				"policecheck":  person.Policecheck,
-				"addresscheck": person.Addresscheck,
-			},
-		)
-	} else {
-		c.JSON(
-			http.StatusOK,
-			gin.H{
-				"exists": false,
-			},
-		)
-	}
-
-}
-func CreateUser(c *gin.Context) {
-	person := models.Person{}
-
-	err := c.BindJSON(&person)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, `{"error";"Couldnt parse request to json}"`)
-
-	}
-
-	args := db.CreateUserParams{
-		Nic:          person.NIC,
-		Address:      person.Address,
-		Email:        person.Email,
-		Name:         person.Name,
-		Idcheck:      false,
-		Addresscheck: false,
-		Policecheck:  false,
-		Failed:       false,
-	}
-
-	_, err = queries.CreateUser(context.Background(), args)
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, fmt.Sprintln("Couldn't add to db: ", err))
+	if err := c.ShouldBindBodyWith(&nic, binding.JSON); err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
+
+	check, err := queries.GetCheck(context.Background(), nic.NIC)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	c.JSON(
 		http.StatusOK,
 		gin.H{
-			"status": "ok",
+			"exists":       true,
+			"name":         check.Name,
+			"nic":          check.Nic,
+			"idcheck":      check.Idcheck,
+			"policecheck":  check.Policecheck,
+			"addresscheck": check.Addresscheck,
 		},
 	)
 }
@@ -177,7 +148,6 @@ func GetToken(c *gin.Context) {
 }
 
 func ResponseHandlerexists(c *gin.Context) {
-
 	person := models.Person{}
 
 	err := c.BindJSON(&person)
