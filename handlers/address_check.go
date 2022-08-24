@@ -23,14 +23,15 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, addresscheckIP, bodyReader)
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	token, err := auth.GenerateToken()
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
@@ -42,7 +43,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
@@ -52,7 +53,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	err = json.NewDecoder(res.Body).Decode(&addresschecked)
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
@@ -65,7 +66,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 	if addresschecked.Exists {
 		err = queries.UpdateAddressCheck(context.Background(), addresschecked.NIC)
 		if err != nil {
-			util.SendError(http.StatusInternalServerError, err.Error())
+			util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 			return

@@ -22,7 +22,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, PoliceIP, bodyReader)
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
@@ -30,7 +30,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	token, err := auth.GenerateToken()
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
@@ -42,7 +42,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
@@ -53,7 +53,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	err = json.NewDecoder(res.Body).Decode(&policechecked)
 	if err != nil {
-		util.SendError(http.StatusInternalServerError, err.Error())
+		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
@@ -66,7 +66,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 	if policechecked.Clear {
 		err = queries.UpdatePoliceCheck(context.Background(), policechecked.NIC)
 		if err != nil {
-			util.SendError(http.StatusInternalServerError, err.Error())
+			util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 			return
