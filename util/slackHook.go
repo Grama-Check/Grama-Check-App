@@ -20,8 +20,11 @@ func init() {
 	if err != nil {
 		log.Fatal("Error loading config:", err)
 	}
-	slackIssueID = "https://hooks.slack.com/services/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"
-	slackErrID = "https://hooks.slack.com/services/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"
+	// slackIssueID = "https://hooks.slack.com/services/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"
+	// slackErrID = "https://hooks.slack.com/services/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"
+
+	slackIssueID = config.SlackIssueID
+	slackErrID = config.SlackErrorID
 
 }
 
