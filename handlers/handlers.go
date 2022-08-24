@@ -105,7 +105,7 @@ func ResponseHandler(c *gin.Context) {
 		}
 	}
 
-	IdentityCheck(person, c)
+	go IdentityCheck(person, c)
 
 	c.JSON(
 		http.StatusOK,
@@ -175,7 +175,7 @@ func ResponseHandlerexists(c *gin.Context) {
 
 	}
 
-	IdentityCheck(person, c)
+	go IdentityCheck(person, c)
 
 	c.JSON(
 		http.StatusOK,
