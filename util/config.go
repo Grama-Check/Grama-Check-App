@@ -4,9 +4,11 @@ import "github.com/spf13/viper"
 
 // All configuration for application
 type Config struct {
-	DBDriver    string `mapstructure:"DB_DRIVER"`
-	DBSource    string `mapstructure:"DB_SOURCE"`
-	SendGridKey string `mapstructure:"SENDGRID_API_KEY"`
+	DBDriver     string `mapstructure:"DB_DRIVER"`
+	DBSource     string `mapstructure:"DB_SOURCE"`
+	SendGridKey  string `mapstructure:"SENDGRID_API_KEY"`
+	SlackIssueID string `mapstructure:"SLACK_ISSUE_ID"`
+	SlackErrorID string `mapstructure:"SLACK_ERROR_ID"`
 }
 
 func LoadConfig(path string) (config Config, err error) {

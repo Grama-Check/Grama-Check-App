@@ -10,6 +10,7 @@ import (
 
 	"github.com/Grama-Check/Grama-Check-App/auth"
 	"github.com/Grama-Check/Grama-Check-App/models"
+	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,12 +23,15 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, addresscheckIP, bodyReader)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	token, err := auth.GenerateToken()
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
 	}
@@ -38,6 +42,8 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -46,6 +52,8 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	err = json.NewDecoder(res.Body).Decode(&addresschecked)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -57,12 +65,15 @@ func Addresscheck(p models.Person, c *gin.Context) {
 	if addresschecked.Exists {
 		err = queries.UpdateAddressCheck(context.Background(), addresschecked.NIC)
 		if err != nil {
+			util.SendError(http.StatusInternalServerError, err.Error())
+
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 			return
 		}
 
 		PoliceCheck(p, c)
 	} else {
+		util.SendIssue(p, "Address")
 		queries.UpdateFailed(context.Background(), addresschecked.NIC)
 	}
 }
