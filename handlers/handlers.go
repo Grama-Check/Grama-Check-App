@@ -37,7 +37,9 @@ func init() {
 	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	err2 := conn.Ping()
 	if err != nil || err2 != nil {
-		log.Println(http.StatusInternalServerError, err.Error(), err2.Error())
+		util.SendError(http.StatusInternalServerError, err2.Error())
+
+		// log.Println(http.StatusInternalServerError, err.Error(), "", err2.Error())
 		return
 	}
 
@@ -58,6 +60,8 @@ func ResponseHandler(c *gin.Context) {
 	person := models.Person{}
 
 	if err := c.ShouldBindBodyWith(&person, binding.JSON); err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
@@ -80,16 +84,22 @@ func ResponseHandler(c *gin.Context) {
 		if strings.EqualFold(err.Error(), duplicateError) {
 			err = queries.DeleteCheck(context.Background(), args.Nic)
 			if err != nil {
+				util.SendError(http.StatusInternalServerError, err.Error())
+
 				c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 				return
 			}
 
 			_, err = queries.CreateCheck(context.Background(), args)
 			if err != nil {
+				util.SendError(http.StatusInternalServerError, err.Error())
+
 				c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 				return
 			}
 		} else {
+			util.SendError(http.StatusInternalServerError, err.Error())
+
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 			return
 		}
@@ -109,12 +119,16 @@ func GetStatus(c *gin.Context) {
 	nic := models.StatusCheck{}
 
 	if err := c.ShouldBindBodyWith(&nic, binding.JSON); err != nil {
+		util.SendError(http.StatusBadRequest, err.Error())
+
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
 	check, err := queries.GetCheck(context.Background(), nic.NIC)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -136,6 +150,8 @@ func GetToken(c *gin.Context) {
 	token, err := auth.GenerateToken()
 
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token: "+err.Error())
 	}
 
@@ -153,6 +169,8 @@ func ResponseHandlerexists(c *gin.Context) {
 	err := c.BindJSON(&person)
 
 	if err != nil {
+		util.SendError(http.StatusBadRequest, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusBadRequest, `{"error";"Couldnt parse request to json}"`)
 
 	}

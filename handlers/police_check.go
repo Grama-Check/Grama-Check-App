@@ -10,6 +10,7 @@ import (
 
 	"github.com/Grama-Check/Grama-Check-App/auth"
 	"github.com/Grama-Check/Grama-Check-App/models"
+	"github.com/Grama-Check/Grama-Check-App/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,12 +22,16 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	req, err := http.NewRequest(http.MethodPost, PoliceIP, bodyReader)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	token, err := auth.GenerateToken()
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, "Couldn't generate token")
 		return
 	}
@@ -37,6 +42,8 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -46,6 +53,8 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	err = json.NewDecoder(res.Body).Decode(&policechecked)
 	if err != nil {
+		util.SendError(http.StatusInternalServerError, err.Error())
+
 		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -57,10 +66,13 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 	if policechecked.Clear {
 		err = queries.UpdatePoliceCheck(context.Background(), policechecked.NIC)
 		if err != nil {
+			util.SendError(http.StatusInternalServerError, err.Error())
+
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 			return
 		}
 	} else {
+		util.SendIssue(p, "Police")
 		queries.UpdateFailed(context.Background(), policechecked.NIC)
 	}
 }
