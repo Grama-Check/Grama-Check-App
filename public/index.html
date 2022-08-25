@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Grama Check</title>
@@ -20,9 +21,7 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -40,7 +39,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          
+
           <li class="dropdown"><a href="#"><span>Get a Certificate</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a onClick="auth.signIn()">Apply for a Grama Certificate</a></li>
@@ -160,7 +159,7 @@
     <a name="features"></a>
     <section id="features" class="features">
 
-      
+
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
@@ -222,7 +221,7 @@
             </div>
           </div>
 
-        </div> 
+        </div>
 
       </div>
 
@@ -231,7 +230,7 @@
     <!-- ======= Services Section ======= -->
     <a name="services"></a>
     <section id="services" class="services">
-      
+
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
@@ -331,20 +330,39 @@
 
   <!-- Asgardeo Integration -->
   <script src="https://unpkg.com/@asgardeo/auth-spa@latest/dist/asgardeo-spa.production.min.js"></script>
+
   <script>
     // This client is a class and can be instantiated as follows.
     var auth = AsgardeoAuth.AsgardeoSPAClient.getInstance();
-    // const auth = new AsgardeoAuthClient(store);
 
     // Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
     auth.initialize({
-      signInRedirectURL: "/home.html",
-      signOutRedirectURL: "/index.html",
-      clientID: "voZSrw1H0yDbaMDfV0Te603P3DYa",
-      baseUrl: "https://api.asgardeo.io/t/gramacheck",
-      scope: [ "openid","profile" ]
+       signInRedirectURL: "https://santhusha-mallawatantri.github.io/grama-check-frontend/home.html",
+       signOutRedirectURL: "https://santhusha-mallawatantri.github.io/grama-check-frontend/",
+       clientID: "voZSrw1H0yDbaMDfV0Te603P3DYa",
+       baseUrl: "https://api.asgardeo.io/t/gramacheck",
+       scope: [ "openid","profile","address" ]
     });
+
+    // // Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
+    // auth.initialize({
+    //   signInRedirectURL: "https://grama-check.azurewebsites.net/home.html",
+    //   signOutRedirectURL: "https://grama-check.azurewebsites.net/",
+    //   clientID: "voZSrw1H0yDbaMDfV0Te603P3DYa",
+    //   baseUrl: "https://api.asgardeo.io/t/gramacheck",
+    //   scope: [ "openid","profile" ]
+    // });
     auth.signIn({callOnlyOnRedirect:true})
+
+    // The `sign-in` hook is used to fire a callback function after signing in is successful.
+    auth.on("sign-in", (response) => {
+      alert("You have successfully signed in!");
+    });
+
+    // The `sign-out` hook is used to fire a callback function after signing out is successful.
+    auth.on("sign-out", (response) => {
+      alert("You have successfully signed out!");
+    });
   </script>
 
 </body>

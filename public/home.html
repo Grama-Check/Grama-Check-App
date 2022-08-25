@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Grama Check</title>
@@ -20,13 +21,15 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- UniIcon CDN Link  -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+  <!-- JQuery File -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
@@ -50,7 +53,7 @@
               <li><a href="#about">Apply for a Police Clearance</a></li>
             </ul>
           </li>
-          <li><a href="https://join.slack.com/t/gramacheck/shared_invite/zt-1drkg5xir-EoHnN_rqyTJ4ILOLT7HN3w" class="nav-link scrollto">Support</a></li>
+          <li><a href="https://myaccount.asgardeo.io/t/gramacheck" class="nav-link scrollto">My Account</a></li>
           <li><a class="getstarted scrollto" onClick="auth.signOut()">Logout</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -99,7 +102,7 @@
         <div class="row gy-4">
 
           <div class="col-lg">
-            <form action="http://localhost:8080/apply" method="post" class="user-form" id="applyForm">
+            <form action="http://localhost:9090/gramacheck" method="post" class="user-form" id="applyForm">
               <div class="row align-self-center gy-3">
 
                 <div class="col-md-6">
@@ -119,11 +122,9 @@
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message"><!-- Cofigure the http --></div>
+                  <div class="sent-message" id="apply-message"></div>
 
-                  <button onclick="alert('Success!\nApplication for Grama Certification Success')" type="submit">Apply for a Certificate</button>
+                  <button type="submit">Apply for a Certificate</button>
                 </div>
 
               </div>
@@ -150,7 +151,7 @@
         <div class="row gy-4">
 
           <div class="col-lg">
-            <form action="http://localhost:8080/check" method="post" class="progress-form" id="checkForm">
+            <form action="http://localhost:9090/status" method="post" class="progress-form" id="checkForm">
               <div class="row align-self-center gy-3">
 
                 <div class="col-md-6">
@@ -162,11 +163,9 @@
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message"><!-- Cofigure the http --></div>
+                  <div class="sent-message" id="check-message"><!-- Cofigure the http --></div>
 
-                  <button onclick="alert('Please wait while we process your request')" type="submit">Check Status of Certificate</button>
+                  <button type="submit">Check Status of Certificate</button>
                 </div>
 
               </div>
@@ -180,6 +179,42 @@
       </div>
 
     </section><!-- End Grama Certificate Section -->
+
+    <!-- Status Check progress insert -->
+    <div class="progress-bar" id="pbar">
+      <div class="head">
+        <p class="head_1">Status of Your <span>Grama</span> Certificate</p>
+      </div>
+
+      <ul>
+        <li>
+          <i class="icon uil uil-user"></i>
+          <div class="progress one">
+            <i id="identity" class="uil uil-times"></i>
+          </div>
+          <p class="text">Identity Check</p>
+        </li>
+
+        <li>
+          <i class="icon uil uil-map-marker"></i>
+          <div class="progress two">
+            <i id="address" class="uil uil-times"></i>
+          </div>
+          <p class="text">Address Check</p>
+        </li>
+
+        <li>
+          <i class="icon uil uil-user-md"></i>
+          <div class="progress three">
+            <i id="police" class="uil uil-times"></i>
+          </div>
+          <p class="text">Police Check</p>
+        </li>
+      </ul>
+
+      <button onclick="clearProgressBar()">Okay</button>
+    </div>
+    <!-- Status Check progress insert -->
 
     <!-- ======= Police Certificate Section ======= -->
     <section id="about" class="about">
@@ -277,13 +312,17 @@
 
     // Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
     auth.initialize({
-      signInRedirectURL: "/home.html",
-      signOutRedirectURL: "/index.html",
+      signInRedirectURL: "https://santhusha-mallawatantri.github.io/grama-check-frontend/home.html",
+      signOutRedirectURL: "https://santhusha-mallawatantri.github.io/grama-check-frontend/",
       clientID: "voZSrw1H0yDbaMDfV0Te603P3DYa",
       baseUrl: "https://api.asgardeo.io/t/gramacheck",
-      scope: [ "openid","profile" ]
+      scope: [ "openid","profile","address" ]
     });
     auth.signIn({callOnlyOnRedirect:true})
+    // The `sign-in` hook is used to fire a callback function after signing in is successful.
+    auth.on("sign-in", (response) => {
+        alert("You have successfully signed in!");
+    });
 
     //Get the form element by id
     let applyForm = document.getElementById("applyForm");
@@ -294,6 +333,14 @@
 
       // Prevent the default browser behaviour of submitting
       e.preventDefault();
+
+      const accessToken = await auth.getAccessToken();
+
+      const token = "bearer " + accessToken;
+
+      const formType = "apply";
+
+      const applyMsg = document.getElementById('apply-message');
 
       // Get the element attached to the event handler.
       let form = e.currentTarget;
@@ -307,13 +354,28 @@
         let formData = new FormData(form);
 
         // The `postFormFieldsAsJson()`
-        let responseData = await postFormFieldsAsJson({ url, formData });
+        let responseData = await postFormFieldsAsJson({ url, formData, token, formType });
 
         // Destructure the response data
-        let { serverDataResponse } = responseData;
+        let { status } = responseData;
+
+        if (status == "ok") {
+          applyMsg.innerHTML = "Request Sent Successfully";
+          applyMsg.classList.add('active');
+
+          setTimeout(function() {
+            applyMsg.classList.remove('active');
+            applyMsg.classList.add('fade-out');
+
+            setTimeout(function() {
+              applyMsg.classList.remove('fade-out');
+              applyMsg.innerHTML = "";
+            }, 3000);
+          }, 3000);
+        }
 
         //Display the response data in the console (for debugging)
-        console.log(serverDataResponse);
+        console.log(status);
       } catch (error) {
         //If an error occurs display it in the console (for debugging)
         console.error(error);
@@ -326,6 +388,14 @@
       // Prevent the default browser behaviour of submitting
       e.preventDefault();
 
+      const accessToken = await auth.getAccessToken();
+
+      const token = "bearer " + accessToken;
+
+      const formType = "check";
+
+      const checkMsg = document.getElementById('check-message');
+
       // Get the element attached to the event handler.
       let form = e.currentTarget;
 
@@ -338,13 +408,35 @@
         let formData = new FormData(form);
 
         // The `postFormFieldsAsJson()`
-        let responseData = await postFormFieldsAsJson({ url, formData });
+        let responseData = await postFormFieldsAsJson({ url, formData, token, formType });
 
         // Destructure the response data
-        let { serverDataResponse } = responseData;
+        let { exists, name, nic, idcheck, policecheck, addresscheck } = responseData;
 
         //Display the response data in the console (for debugging)
-        console.log(serverDataResponse);
+        if (exists) {
+          if (idcheck) {
+            const idIcon = document.getElementById('identity');
+            idIcon.classList.remove('uil-times');
+            idIcon.classList.add('uil-check');
+          }
+
+          if (addresscheck) {
+            const addressIcon = document.getElementById('address');
+            addressIcon.classList.remove('uil-times');
+            addressIcon.classList.add('uil-check');
+          }
+
+          if (policecheck) {
+            const policeIcon = document.getElementById('police');
+            policeIcon.classList.remove('uil-times');
+            policeIcon.classList.add('uil-check');
+          }
+
+          const progressBar = document.getElementById('pbar');
+
+          progressBar.classList.add('active');
+        }
       } catch (error) {
         //If an error occurs display it in the console (for debugging)
         console.error(error);
@@ -352,21 +444,31 @@
     });
 
     // Helper function to POST data as JSON with Fetch.
-    async function postFormFieldsAsJson({ url, formData }) {
+    async function postFormFieldsAsJson({ url, formData, token, formType }) {
       //Create an object from the form data entries
       let formDataObject = Object.fromEntries(formData.entries());
       // Format the plain form data as JSON
       let formDataJsonString = JSON.stringify(formDataObject);
+
+      var status;
+
+      if (formType == "check") {
+        status = document.getElementById('check-message');
+      } else if (formType == "apply") {
+        status = document.getElementById('apply-message');
+      }
 
       //Set the fetch options (headers, body)
       let fetchOptions = {
         //HTTP method set to POST.
         method: "POST",
         //Set the headers that specify you're sending a JSON body request and accepting JSON response
-        // headers: {
-        //   "Content-Type": "application/json",
-        //   "Accept": "application/json",
-        // },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": token,
+          "Form": formType,
+        },
         // POST request body as JSON string.
         body: formDataJsonString,
       };
@@ -378,10 +480,49 @@
       //If the response is not ok throw an error (for debugging)
       if (!res.ok) {
         let error = await res.text();
+        status.innerHTML = error.replace(/(^")|("$)/g, "");
+        status.classList.add('active');
+
+        setTimeout(function() {
+          status.classList.remove('active');
+          status.classList.add('fade-out');
+
+          setTimeout(function() {
+            status.classList.remove('fade-out');
+            status.innerHTML = "";
+          }, 3000);
+        }, 3000);
+
         throw new Error(error);
       }
       //If the response was OK, return the response body.
       return res.json();
+    }
+
+    function clearProgressBar() {
+      const progressBar = document.getElementById('pbar');
+
+      progressBar.classList.remove('active');
+      progressBar.classList.add('fade-out');
+
+      setTimeout(function() {
+        progressBar.classList.remove('fade-out');
+
+        const idIcon = document.getElementById('identity');
+        idIcon.className = "";
+        idIcon.classList.add('uil');
+        idIcon.classList.add('uil-times');
+
+        const addressIcon = document.getElementById('address');
+        addressIcon.className = "";
+        addressIcon.classList.add('uil');
+        addressIcon.classList.add('uil-times');
+
+        const policeIcon = document.getElementById('police');
+        policeIcon.className = "";
+        policeIcon.classList.add('uil');
+        policeIcon.classList.add('uil-times');
+      }, 3000);
     }
   </script>
 

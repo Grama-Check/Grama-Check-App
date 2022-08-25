@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Aug 21 00:48:54 2022
+# Make data base, printed on Thu Aug 25 16:23:48 2022
 
 # Variables
 
@@ -49,7 +49,7 @@ VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:99320
+JOURNAL_STREAM = 8:55621
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -75,9 +75,9 @@ XDG_DATA_DIRS = /usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/d
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=f70ebbb77df16cf839843eff63011bc2
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus,guid=cf31b87d6206ce6abdc8bd0b630749ba
 # environment
-MANAGERPID = 1378
+MANAGERPID = 1477
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -95,7 +95,7 @@ PATH = /usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/harshas:@/tmp/.ICE-unix/2501,unix/harshas:/tmp/.ICE-unix/2501
+SESSION_MANAGER = local/harshas:@/tmp/.ICE-unix/2609,unix/harshas:/tmp/.ICE-unix/2609
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -113,7 +113,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 99e1cdb18a0f4f90984cff9205227c18
+INVOCATION_ID = 715fb42294904cf1910ae060ff6d2dbc
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/105/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -135,7 +135,7 @@ PWD = /home/wso2/Desktop/Grama-Check-App
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2429
+SSH_AGENT_PID = 2567
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -245,11 +245,11 @@ LC_ALL = C
 # environment
 DBUS_STARTER_BUS_TYPE = session
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/fea5f55c_3174_4e90_9ae8_34ff96c548fe
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/da5385f6_032f_4811_b275_27056eda3760
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.94
+GNOME_TERMINAL_SERVICE = :1.318
 # default
 SUFFIXES := 
 # environment
@@ -271,21 +271,22 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 8210
+VSCODE_PID = 6705
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=f70ebbb77df16cf839843eff63011bc2
+DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=cf31b87d6206ce6abdc8bd0b630749ba
 # variable set hash-table stats:
 # Load=131/1024=13%, Rehash=0, Collisions=20/156=13%
 
 # Pattern-specific Variable Values
+ 
 
 # No pattern-specific variable values.
 
 # Directories
 
-# . (device 64769, inode 11801034): 22 files, no impossibilities.
+# . (device 64769, inode 11671674): 24 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -318,13 +319,13 @@ sqlc:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 14):
+#  recipe to execute (from 'Makefile', line 17):
 	sqlc generate
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-19 10:44:38.312115759
+#  Last modified 2022-08-24 13:46:07.81300699
 #  File has been updated.
 #  Successfully updated.
 
@@ -332,15 +333,16 @@ test:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 16):
+#  recipe to execute (from 'Makefile', line 20):
 	go test -v -cover ./...
+	
 
 createdb:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 4):
+#  recipe to execute (from 'Makefile', line 5):
 	docker exec -it postgresdb createdb --username=root --owner=root postgres
 
 # Not a target:
@@ -354,7 +356,7 @@ dropdb:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 7):
+#  recipe to execute (from 'Makefile', line 8):
 	docker exec -it postgresdb dropdb persons
 
 migrateup:
@@ -362,16 +364,16 @@ migrateup:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 10):
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5000/postgres?sslmode=disable" -verbose up
+#  recipe to execute (from 'Makefile', line 11):
+	migrate -path db/migration -database "postgresql://jhivan:25May2001@grama-check-db.postgres.database.azure.com/postgres?sslmode=require" -verbose up
 
 migratedown:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 12):
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5000/postgres?sslmode=disable" -verbose down
+#  recipe to execute (from 'Makefile', line 14):
+	migrate -path db/migration -database "postgresql://jhivan:25May2001@grama-check-db.postgres.database.azure.com/postgres?sslmode=require" -verbose down
 
 # files hash-table stats:
 # Load=12/1024=1%, Rehash=0, Collisions=0/28=0%
@@ -381,12 +383,12 @@ migratedown:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 35 / storage = 288 B / avg = 8 B
-# current buf: size = 8162 B / used = 288 B / count = 35 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 316 B / avg = 8 B
+# current buf: size = 8162 B / used = 316 B / count = 37 / avg = 8 B
 
-# strcache performance: lookups = 53 / hit rate = 33%
+# strcache performance: lookups = 55 / hit rate = 32%
 # hash-table stats:
-# Load=35/8192=0%, Rehash=0, Collisions=1/53=2%
-# Finished Make data base on Sun Aug 21 00:48:54 2022
+# Load=37/8192=0%, Rehash=0, Collisions=1/55=2%
+# Finished Make data base on Thu Aug 25 16:23:48 2022
 
  
