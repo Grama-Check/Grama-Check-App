@@ -10,8 +10,8 @@ on:
   workflow_dispatch:  
 
 jobs:
-  if: "!github.event.release.prerelease"
   build:
+  if: "!github.event.release.prerelease"
     runs-on: ubuntu-latest
 
     steps:
