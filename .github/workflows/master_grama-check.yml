@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: https://gramacheckservices.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_d8b0c98554784f7190552c6b51496a8e }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_0b105487f13447759fc467ba270d71c2 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_ce969202135f4be0ac350c9fee1597f3 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_c50c0d604f814a9eb68404ded88b361f }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: gramacheckservices.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d8b0c98554784f7190552c6b51496a8e }}/gramacheck/gramacheck:${{ github.sha }}
+        tags: gramacheckservices.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_ce969202135f4be0ac350c9fee1597f3 }}/gramacheck/gramacheck:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'grama-check'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_46317a8509b6440fbeda7d3a6984d14b }}
-        images: 'gramacheckservices.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_d8b0c98554784f7190552c6b51496a8e }}/gramacheck/gramacheck:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_a88cb22779104914b41d08516ecb90eb }}
+        images: 'gramacheckservices.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_ce969202135f4be0ac350c9fee1597f3 }}/gramacheck/gramacheck:${{ github.sha }}'
