@@ -56,5 +56,5 @@ jobs:
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp registry set -n grama-check -g asgardeo-intern-project --server gramacheckservices.azurecr.io --username  ${{ secrets.GRAMACHECK_REGISTRY_USERNAME }} --password ${{ secrets.GRAMACHECK_REGISTRY_PASSWORD }}
             num=${{ github.event.release.tag_name }}
-            suffix=$(echo num | sed 's/\./\-/g')
+            suffix=$(echo $num | sed 's/\./\-/g')
             az containerapp update -n grama-check -g asgardeo-intern-project --revision-suffix $suffix --image gramacheckservices.azurecr.io/gramacheck/grama-check:${{ github.event.release.tag_name  }}
