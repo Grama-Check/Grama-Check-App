@@ -9,9 +9,10 @@ on:
   # Allow mannually trigger 
   workflow_dispatch:  
 
+
 jobs:
   build:
-  if: "!github.event.release.prerelease"
+    if: "!github.event.release.prerelease"
     runs-on: ubuntu-latest
 
     steps:
