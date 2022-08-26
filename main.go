@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/Grama-Check/Grama-Check-App/handlers"
 	"github.com/Grama-Check/Grama-Check-App/middleware"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -11,11 +10,11 @@ import (
 func main() {
 	router := gin.Default()
 
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"*"}
-	config.AllowHeaders = []string{"*"}
+	// config := cors.DefaultConfig()
+	// config.AllowOrigins = []string{"*"}
+	// config.AllowHeaders = []string{"*"}
 
-	router.Use(cors.New(config))
+	// router.Use(cors.New(config))
 
 	router.Use(static.Serve("/", static.LocalFile("./public", false)))
 
