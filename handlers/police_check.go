@@ -15,6 +15,7 @@ import (
 )
 
 func PoliceCheck(p models.Person, c *gin.Context) {
+	// preparing the request to send to police check mico service
 	reqstr := fmt.Sprintf(`{"nic":"%s","address":"%s","name":"%s"}`, p.NIC, p.Address, p.Name)
 	jsonBody := []byte(reqstr)
 
@@ -28,6 +29,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 		return
 	}
 
+	// generating the token
 	token, err := auth.GenerateToken()
 	if err != nil {
 		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
@@ -36,10 +38,12 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 		return
 	}
 
+	// setting the Authorization header
 	authHeader := fmt.Sprintf("Bearer %v", token)
 
 	req.Header.Add("Authorization", authHeader)
 
+	// making the request to policecheck micro service
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
@@ -48,7 +52,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 		return
 	}
 
-	// resBody, err := ioutil.ReadAll(res.Body)
+	// checking if the expected result is recieved from police check
 	policechecked := models.PoliceCheck{}
 
 	err = json.NewDecoder(res.Body).Decode(&policechecked)
@@ -61,8 +65,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	log.Println("Police: NIC from res", policechecked.NIC, "exists from res", policechecked.Clear)
 
-	// log.Println("Police: NIC from res", policechecked.NIC, "exists from res", policechecked.Clear)
-
+	// updating the checks table based on the clear status
 	if policechecked.Clear {
 		err = queries.UpdatePoliceCheck(context.Background(), policechecked.NIC)
 		if err != nil {
