@@ -10,12 +10,6 @@ import (
 func main() {
 	router := gin.Default()
 
-	// config := cors.DefaultConfig()
-	// config.AllowOrigins = []string{"*"}
-	// config.AllowHeaders = []string{"*"}
-
-	// router.Use(cors.New(config))
-
 	router.Use(static.Serve("/", static.LocalFile("./public", false)))
 
 	authGroup := router.Group("/").Use(middleware.AuthMiddleware())
