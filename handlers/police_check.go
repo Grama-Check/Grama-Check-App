@@ -43,7 +43,7 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	req.Header.Add("Authorization", authHeader)
 
-	// making the request to policecheck micro service
+	// making the request to police  check micro service
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
