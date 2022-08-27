@@ -15,6 +15,7 @@ import (
 )
 
 func Addresscheck(p models.Person, c *gin.Context) {
+	// preparing the request to send to address check mico service
 	reqstr := fmt.Sprintf(`{"nic":"%s","address":"%s"}`, p.NIC, p.Address)
 
 	jsonBody := []byte(reqstr)
@@ -29,6 +30,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 		return
 	}
 
+	// generating the token
 	token, err := auth.GenerateToken()
 	if err != nil {
 		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
@@ -37,10 +39,12 @@ func Addresscheck(p models.Person, c *gin.Context) {
 		return
 	}
 
+	// setting the Authorization header
 	authHeader := fmt.Sprintf("Bearer %v", token)
 
 	req.Header.Add("Authorization", authHeader)
 
+	// making the request to address check micro service
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
@@ -49,6 +53,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 		return
 	}
 
+	// checking if the expected result is recieved from address check
 	addresschecked := models.AddressChecked{}
 
 	err = json.NewDecoder(res.Body).Decode(&addresschecked)
@@ -61,8 +66,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 	log.Println("Address: NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
 
-	// log.Println("Address: NIC from res", addresschecked.NIC, "exists from res", addresschecked.Exists)
-
+	// updating the checks table based on the clear status
 	if addresschecked.Exists {
 		err = queries.UpdateAddressCheck(context.Background(), addresschecked.NIC)
 		if err != nil {
@@ -72,6 +76,7 @@ func Addresscheck(p models.Person, c *gin.Context) {
 			return
 		}
 
+		// calling police check method
 		PoliceCheck(p, c)
 	} else {
 		util.SendIssue(p, "Address")

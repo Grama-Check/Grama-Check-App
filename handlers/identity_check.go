@@ -52,7 +52,7 @@ func IdentityCheck(p models.Person, c *gin.Context) {
 		return
 	}
 
-	// checking if the expected result is recieved from police check
+	// checking if the expected result is recieved from identity check
 	idchecked := models.IDChecked{}
 
 	err = json.NewDecoder(res.Body).Decode(&idchecked)
