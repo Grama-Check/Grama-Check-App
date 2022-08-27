@@ -33,7 +33,6 @@ func init() {
 		log.Fatal("Error loading config:", err)
 	}
 
-	//log.Println(config.SendGridKey, ":", config.DBSource)
 	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	err2 := conn.Ping()
 	if err != nil || err2 != nil {
@@ -57,6 +56,7 @@ func Index(c *gin.Context) {
 }
 
 func ResponseHandler(c *gin.Context) {
+	// struct to store infotmation recived upon apply form submission
 	person := models.Person{}
 
 	if err := c.ShouldBindBodyWith(&person, binding.JSON); err != nil {
@@ -66,6 +66,7 @@ func ResponseHandler(c *gin.Context) {
 		return
 	}
 
+	// updating checks table
 	args := db.CreateCheckParams{
 		Nic:          person.NIC,
 		Address:      person.Address,
@@ -77,11 +78,14 @@ func ResponseHandler(c *gin.Context) {
 		Failed:       false,
 	}
 
+	// creating a check record with the received NIC
 	_, err := queries.CreateCheck(context.Background(), args)
 	if err != nil {
+		// checking if there is a check already exisiting with the recieved NIC
 		duplicateError := "pq: duplicate key value violates unique constraint \"checks_pkey\""
 
 		if strings.EqualFold(err.Error(), duplicateError) {
+			// deleting the existing record with the received NIC
 			err = queries.DeleteCheck(context.Background(), args.Nic)
 			if err != nil {
 				util.SendError(http.StatusInternalServerError, person.NIC+" "+err.Error())
@@ -90,6 +94,7 @@ func ResponseHandler(c *gin.Context) {
 				return
 			}
 
+			// creating a check record with the received NIC
 			_, err = queries.CreateCheck(context.Background(), args)
 			if err != nil {
 				util.SendError(http.StatusInternalServerError, person.NIC+" "+err.Error())
@@ -105,8 +110,10 @@ func ResponseHandler(c *gin.Context) {
 		}
 	}
 
+	// calling the identity check function
 	go IdentityCheck(person, c)
 
+	// sending back the response
 	c.JSON(
 		http.StatusOK,
 		gin.H{
@@ -116,6 +123,7 @@ func ResponseHandler(c *gin.Context) {
 }
 
 func GetStatus(c *gin.Context) {
+	// struct to store infotmation recived upon check form submission
 	nic := models.StatusCheck{}
 
 	if err := c.ShouldBindBodyWith(&nic, binding.JSON); err != nil {
@@ -125,10 +133,12 @@ func GetStatus(c *gin.Context) {
 		return
 	}
 
+	// retieving the relevant check information for the recieved NIC
 	check, err := queries.GetCheck(context.Background(), nic.NIC)
 	if err != nil {
 		util.SendError(http.StatusInternalServerError, nic.NIC+" "+err.Error())
 
+		// checking if the error was null error
 		missingError := "sql: no rows in result set"
 
 		if strings.EqualFold(err.Error(), missingError) {
@@ -140,6 +150,7 @@ func GetStatus(c *gin.Context) {
 		return
 	}
 
+	// sending back the response
 	c.JSON(
 		http.StatusOK,
 		gin.H{
