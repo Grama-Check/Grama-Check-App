@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/Grama-Check/Grama-Check-App/handlers"
-	"github.com/Grama-Check/Grama-Check-App/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -19,7 +18,7 @@ func main() {
 
 	router.Use(static.Serve("/", static.LocalFile("./public", false)))
 
-	authGroup := router.Group("/").Use(middleware.AuthMiddleware())
+	authGroup := router.Group("/") //.Use(middleware.AuthMiddleware())
 
 	authGroup.POST("/gramacheck", handlers.ResponseHandler)
 	authGroup.POST("/status", handlers.GetStatus)

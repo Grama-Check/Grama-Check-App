@@ -104,7 +104,6 @@ func ResponseHandler(c *gin.Context) {
 			return
 		}
 	}
-
 	go IdentityCheck(person, c)
 
 	c.JSON(
