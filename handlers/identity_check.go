@@ -74,6 +74,7 @@ func IdentityCheck(p models.Person, c *gin.Context) {
 
 		Addresscheck(p, c)
 	} else {
+		SendStatus(p.NIC)
 		util.SendIssue(p, "Identity")
 		queries.UpdateFailed(context.Background(), idchecked.NIC)
 	}

@@ -74,7 +74,9 @@ func Addresscheck(p models.Person, c *gin.Context) {
 
 		PoliceCheck(p, c)
 	} else {
+
 		util.SendIssue(p, "Address")
 		queries.UpdateFailed(context.Background(), addresschecked.NIC)
+		SendStatus(p.NIC)
 	}
 }
