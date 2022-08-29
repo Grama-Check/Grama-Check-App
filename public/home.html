@@ -319,27 +319,27 @@
       scope: [ "openid","profile","address" ]
     });
     auth.signIn({callOnlyOnRedirect:true})
-    // The `sign-in` hook is used to fire a callback function after signing in is successful.
-    auth.on("sign-in", (response) => {
-        alert("You have successfully signed in!");
-    });
 
     //Get the form element by id
     let applyForm = document.getElementById("applyForm");
     let checkForm = document.getElementById("checkForm");
 
-    //Define the event handler for the form when it's submitted
+    //Define the event handler for the form when it's submitted (apply form)
     applyForm.addEventListener("submit", async (e) => {
 
       // Prevent the default browser behaviour of submitting
       e.preventDefault();
 
+      // Getting the access token from Asgardeo
       const accessToken = await auth.getAccessToken();
 
+      //  Preparing the token to be added into the header
       const token = "bearer " + accessToken;
 
+      // Indicator to say the request is from apply form
       const formType = "apply";
 
+      // Getting the div element by ID to display outcome of the request
       const applyMsg = document.getElementById('apply-message');
 
       // Get the element attached to the event handler.
@@ -359,10 +359,13 @@
         // Destructure the response data
         let { status } = responseData;
 
+        // Checking if the response from backend is OK
         if (status == "ok") {
+          // Displaying that the request was successfully sent
           applyMsg.innerHTML = "Request Sent Successfully";
           applyMsg.classList.add('active');
 
+          // Timeout function to make the message appear and dissappear
           setTimeout(function() {
             applyMsg.classList.remove('active');
             applyMsg.classList.add('fade-out');
@@ -388,12 +391,16 @@
       // Prevent the default browser behaviour of submitting
       e.preventDefault();
 
+      // Getting the access token from Asgardeo
       const accessToken = await auth.getAccessToken();
 
+      //  Preparing the token to be added into the header
       const token = "bearer " + accessToken;
 
+      // Indicator to say the request is from check form
       const formType = "check";
 
+      // Getting the div element by ID to display outcome of the request
       const checkMsg = document.getElementById('check-message');
 
       // Get the element attached to the event handler.
@@ -413,28 +420,33 @@
         // Destructure the response data
         let { exists, name, nic, idcheck, policecheck, addresscheck } = responseData;
 
-        //Display the response data in the console (for debugging)
+        //Display the response data in status display section
         if (exists) {
+          // Changing the icons if id exists
           if (idcheck) {
             const idIcon = document.getElementById('identity');
             idIcon.classList.remove('uil-times');
             idIcon.classList.add('uil-check');
           }
 
+          // Changing the icons if address exists
           if (addresscheck) {
             const addressIcon = document.getElementById('address');
             addressIcon.classList.remove('uil-times');
             addressIcon.classList.add('uil-check');
           }
 
+          // Changing the icons if police check is clear
           if (policecheck) {
             const policeIcon = document.getElementById('police');
             policeIcon.classList.remove('uil-times');
             policeIcon.classList.add('uil-check');
           }
 
+          // Getting the div tag by id which contains status display section
           const progressBar = document.getElementById('pbar');
 
+          // Making the status display section visible
           progressBar.classList.add('active');
         }
       } catch (error) {
@@ -452,6 +464,7 @@
 
       var status;
 
+      // Check from which form the request is being sent and get the relevant div tag to display the result of the request
       if (formType == "check") {
         status = document.getElementById('check-message');
       } else if (formType == "apply") {
@@ -462,7 +475,8 @@
       let fetchOptions = {
         //HTTP method set to POST.
         method: "POST",
-        //Set the headers that specify you're sending a JSON body request and accepting JSON response
+        // Set the headers that specify you're sending a JSON body request and accepting JSON response
+        // And the access token and form type to indictae from which form the request is being sent
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
@@ -473,16 +487,19 @@
         body: formDataJsonString,
       };
 
-      //Get the response body as JSON.
-      //If the response was not OK, throw an error.
+      // Get the response body as JSON.
+      // If the response was not OK, throw an error.
       let res = await fetch(url, fetchOptions);
 
       //If the response is not ok throw an error (for debugging)
       if (!res.ok) {
         let error = await res.text();
+
+        // Removing the leading and traling ' " ' from the error message using regx
         status.innerHTML = error.replace(/(^")|("$)/g, "");
         status.classList.add('active');
 
+        // Timeout function to make the message appear and dissappear
         setTimeout(function() {
           status.classList.remove('active');
           status.classList.add('fade-out');
@@ -500,11 +517,14 @@
     }
 
     function clearProgressBar() {
+      // Getting the div tag by id which contains status display section
       const progressBar = document.getElementById('pbar');
 
+      // Making the status display section disappear
       progressBar.classList.remove('active');
       progressBar.classList.add('fade-out');
 
+      // Resetting the status display section
       setTimeout(function() {
         progressBar.classList.remove('fade-out');
 
