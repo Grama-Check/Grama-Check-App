@@ -24,6 +24,8 @@ COPY --from=builder grama-check .
 COPY  public.pem . 
 COPY  private.pem . 
 COPY  app.env . 
+COPY  token.json . 
+COPY  credentials.json . 
 COPY /public ./public
 
 EXPOSE 9090
