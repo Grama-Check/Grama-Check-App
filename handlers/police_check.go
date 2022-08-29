@@ -65,13 +65,14 @@ func PoliceCheck(p models.Person, c *gin.Context) {
 
 	if policechecked.Clear {
 		err = queries.UpdatePoliceCheck(context.Background(), policechecked.NIC)
-		SendStatus(p.NIC)
+
 		if err != nil {
 			util.SendError(http.StatusInternalServerError, p.NIC+" "+err.Error())
 
 			c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
 			return
 		}
+		SendStatus(p.NIC)
 	} else {
 
 		util.SendIssue(p, "Police")

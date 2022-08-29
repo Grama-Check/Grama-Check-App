@@ -64,6 +64,8 @@ func SendStatus(nic string) {
 	var plainTextContent string
 	if person.Failed {
 		plainTextContent = fmt.Sprintf("Status: One or more tests failed.\nIdentity Check Passed?%v\nAddress Check Passed?%v\nPolice Check Passed?%v\n", person.Idcheck, person.Addresscheck, person.Policecheck)
+	} else if person.Policecheck {
+		plainTextContent = fmt.Sprintln("Status: You have passed all checks.")
 	} else {
 		plainTextContent = fmt.Sprintf("Status: One or more tests  pending completion.\nIdentity Check Passed?%v\nAddress Check Passed?%v\nPolice Check Passed?%v\n", person.Idcheck, person.Addresscheck, person.Policecheck)
 
